@@ -84,6 +84,9 @@ namespace hdNes.Nes
             _instructionSet[0x16] = ASL; //ZeroPage, X
             _instructionSet[0x0E] = ASL; //Absolute
             _instructionSet[0x1E] = ASL; //Absolute, X
+            
+            //BCC Branch on Carry Clear
+            _instructionSet[0x90] = BCC;
         }
         
         #endregion
@@ -151,7 +154,7 @@ namespace hdNes.Nes
             PC++;
 
             _absoluteAddress.high = 0x00;
-        }
+        } //Confirmed 01-10-2021
 
         private void FetchAddress_ZeroPageX()
         {
@@ -160,7 +163,7 @@ namespace hdNes.Nes
             
             _absoluteAddress.low = low;
             _absoluteAddress.high = 0x00;
-        }
+        } //Confirmed 01-10-2021
         
         private void FetchAddress_ZeroPageY()
         {
@@ -180,7 +183,7 @@ namespace hdNes.Nes
             PC++;
 
             _absoluteAddress.word += X;
-        }
+        } //Confirmed 01-10-2021
         
         private void FetchAddress_AbsoluteY()
         {
@@ -191,7 +194,7 @@ namespace hdNes.Nes
             PC++;
 
             _absoluteAddress.word += Y;
-        }
+        } //Confirmed 01-10-2021
 
         private void FetchAddress_IndirectX()
         {
@@ -203,9 +206,9 @@ namespace hdNes.Nes
             
             ushort msb = (ushort)((loa + X + 1) & 0x00FF);
             _absoluteAddress.high = Read(msb);
-        }
+        } //Confirmed 01-10-2021
         
-/*  [Obsolete]
+        /*  [Obsolete]
         private void FetchAdress_IndirectY()
         {
             byte loa = Read(PC);
@@ -243,6 +246,22 @@ namespace hdNes.Nes
             
             ushort msb = (ushort)((loa + 1) & 0x00FF);
             _absoluteAddress.high = Read(msb);
+        }
+        
+        private void FetchAddress_Relative()
+        {
+            // This address mode is exclusive to branch instructions. The address
+            // The address must reside within -128 to +127 of the branch instruction.
+
+            _relativeAddress.low = Read(PC);
+            PC++;
+
+            if ((_relativeAddress.low & 0x80) == 1)
+            {
+                _relativeAddress.low = 0x00;
+                _relativeAddress.high = 0xFF;
+            }
+                
         }
         
         #endregion
@@ -347,15 +366,27 @@ namespace hdNes.Nes
             if (_opcode == 0x0A) operand = A;
                 else operand = Read(_absoluteAddress.word);
 
-            
+            /* Faire le reset des flags impliqués */
             P.C = ((operand >> 7) & 1 ) == 1;
-            operand = (byte)((operand << 1) | 0);
+            operand = (byte)(((operand << 1) | 0) & 0xFF);
             
             P.N = ((operand >> 7) & 1) == 1;
             P.Z = operand == 0;
 
             if (_opcode == 0x0A) A = operand;
                 else Write(_absoluteAddress.word, operand);
+        }
+
+        private void BCC()
+        {
+            FetchAddress_Relative();
+           
+            if (!P.C)
+            {
+                _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _absoluteAddress.word;
+            }
+            
         }
         
         #endregion
@@ -365,6 +396,7 @@ namespace hdNes.Nes
         public byte regA { get => A; set => A = value; }
         public byte regX { get => X; set => X = value; }
         public byte regY { get => Y; set => Y = value; }
+        public ushort utPC { get => PC; set => PC = value; }
         
         public Cpu2A03FlagStructure psr { get => P;  }
         
@@ -372,12 +404,17 @@ namespace hdNes.Nes
         {
             PC = 0xC000;
             P.Register = 0x24;
-            Console.WriteLine(P.Register.ToString());
             S = 0xFD;
             A = 0x00;
+            X = 0x00;
             Y = 0x00;
             _absoluteAddress.word = 0x0000;
             _relativeAddress.word = 0x0000;
+
+            for (ushort i = 0; i < 0x2000; i++)
+            {
+                Write(i, 0x00);
+            }
         }
 
         public void UnitTest_Write(ushort address, byte data)
