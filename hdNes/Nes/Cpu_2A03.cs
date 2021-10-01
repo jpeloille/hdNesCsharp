@@ -32,7 +32,6 @@ namespace hdNes.Nes
              }
          }
          
-         
          //Cpu registers & flag structure:
          private byte A; //Accumulator
          private byte X; //Index register X
@@ -45,6 +44,7 @@ namespace hdNes.Nes
          private byte _opcode;
          private WordAddress _absoluteAddress;
          private WordAddress _relativeAddress;
+         private int cycles = 0;
          
         #endregion
 
@@ -77,6 +77,13 @@ namespace hdNes.Nes
             _instructionSet[0x39] = AND; //Absolute, Y
             _instructionSet[0x21] = AND; //Indirect, X
             _instructionSet[0x31] = AND; //Indirect, Y
+            
+            //ASL Shit Left One Bit (Memory or Accumulator)
+            _instructionSet[0x0A] = ASL; //Accumulator
+            _instructionSet[0x06] = ASL; //ZeroPage
+            _instructionSet[0x16] = ASL; //ZeroPage, X
+            _instructionSet[0x0E] = ASL; //Absolute
+            _instructionSet[0x1E] = ASL; //Absolute, X
         }
         
         #endregion
@@ -283,15 +290,6 @@ namespace hdNes.Nes
         #endregion
         
         #region Instructions implementation
-
-        [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
-        public class OpcodeDef : Attribute
-        {
-            public byte Opcode;
-            public int Cycles;
-            public AddressingModes AddressingMode;
-            
-        }
         
         private void ADC()
         {
@@ -315,8 +313,7 @@ namespace hdNes.Nes
         
         private void AND()
         {
-            int cycles = 0;
-            
+
             switch (_opcode)
             {
                 case 0x29: FetchAddress_Immediate(); cycles -= 2; break;
@@ -335,6 +332,32 @@ namespace hdNes.Nes
             A = result;
         }
 
+        private void ASL()
+        {
+            switch (_opcode)
+            {
+                case 0x06: FetchAddress_ZeroPage();  cycles -= 5; break;
+                case 0x16: FetchAddress_ZeroPageX(); cycles -= 6; break;
+                case 0x0E: FetchAddress_Absolute();  cycles -= 6; break;
+                case 0x1E: FetchAddress_AbsoluteX(); cycles -= 7; break;
+            }
+
+            byte operand = 0x00;
+            
+            if (_opcode == 0x0A) operand = A;
+                else operand = Read(_absoluteAddress.word);
+
+            
+            P.C = ((operand >> 7) & 1 ) == 1;
+            operand = (byte)((operand << 1) | 0);
+            
+            P.N = ((operand >> 7) & 1) == 1;
+            P.Z = operand == 0;
+
+            if (_opcode == 0x0A) A = operand;
+                else Write(_absoluteAddress.word, operand);
+        }
+        
         #endregion
         
         #region CPU unit testing methods

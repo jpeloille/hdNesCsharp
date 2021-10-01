@@ -5,11 +5,6 @@ namespace hdNes.Cpu.Test
 {
     public class AND_Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void AND_Immediate()
         {

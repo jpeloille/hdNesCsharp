@@ -6,11 +6,6 @@ namespace hdNes.Cpu.Test
 {
     public class ADC_Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void ADC_Immediate()
         {
