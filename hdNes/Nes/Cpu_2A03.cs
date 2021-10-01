@@ -69,14 +69,14 @@ namespace hdNes.Nes
             _instructionSet[0x71] = ADC; //Indirect, Y
 
             //AND memory with accumulator
-            //_instructionSet[0x29] = AND; //Immediate
-            //_instructionSet[0x25] = AND; //ZeroPage
-            //_instructionSet[0x35] = AND; //ZeroPage, X
-            //_instructionSet[0x2D] = AND; //Absolute
-            //_instructionSet[0x3D] = AND; //Absolute, X
-            //_instructionSet[0x39] = AND; //Absolute, Y
-            //_instructionSet[0x21] = AND; //Indirect, X
-            //_instructionSet[0x31] = AND; //Indirect, Y
+            _instructionSet[0x29] = AND; //Immediate
+            _instructionSet[0x25] = AND; //ZeroPage
+            _instructionSet[0x35] = AND; //ZeroPage, X
+            _instructionSet[0x2D] = AND; //Absolute
+            _instructionSet[0x3D] = AND; //Absolute, X
+            _instructionSet[0x39] = AND; //Absolute, Y
+            _instructionSet[0x21] = AND; //Indirect, X
+            _instructionSet[0x31] = AND; //Indirect, Y
         }
         
         #endregion
@@ -138,7 +138,7 @@ namespace hdNes.Nes
             PC++;
         } //Confirmed 26-09-2021
 
-        private void FetchAdress_ZeroPage()
+        private void FetchAddress_ZeroPage()
         {
             _absoluteAddress.low = Read(PC);
             PC++;
@@ -146,7 +146,7 @@ namespace hdNes.Nes
             _absoluteAddress.high = 0x00;
         }
 
-        private void FetchAdress_ZeroPageX()
+        private void FetchAddress_ZeroPageX()
         {
             byte low = Read(PC); PC++;
             low += X;
@@ -155,7 +155,7 @@ namespace hdNes.Nes
             _absoluteAddress.high = 0x00;
         }
         
-        private void FetchAdress_ZeroPageY()
+        private void FetchAddress_ZeroPageY()
         {
             byte low = Read(PC); PC++;
             low += Y;
@@ -164,7 +164,7 @@ namespace hdNes.Nes
             _absoluteAddress.high = 0x00;
         }
 
-        private void FetchAdress_AbsoluteX()
+        private void FetchAddress_AbsoluteX()
         {
             _absoluteAddress.low = Read(PC);
             PC++;
@@ -175,7 +175,7 @@ namespace hdNes.Nes
             _absoluteAddress.word += X;
         }
         
-        private void FetchAdress_AbsoluteY()
+        private void FetchAddress_AbsoluteY()
         {
             _absoluteAddress.low = Read(PC);
             PC++;
@@ -186,7 +186,7 @@ namespace hdNes.Nes
             _absoluteAddress.word += Y;
         }
 
-        private void FetchAdress_IndirectX()
+        private void FetchAddress_IndirectX()
         {
             byte loa = Read(PC);
             PC++;
@@ -212,7 +212,7 @@ namespace hdNes.Nes
         }
 */
 
-        private void FetchAdress_IndirectY()
+        private void FetchAddress_IndirectY()
         {
             byte loa = Read(PC);
             PC++;
@@ -226,7 +226,7 @@ namespace hdNes.Nes
             _absoluteAddress.word += Y;
         }
         
-        private void FetchAdress_Indirect()
+        private void FetchAddress_Indirect()
         {
             byte loa = Read(PC);
             PC++;
@@ -263,6 +263,22 @@ namespace hdNes.Nes
             
             return result8;
         }
+
+        private byte AND(byte A, byte M)
+        {
+            ushort result16 = (ushort)(A & M);
+            byte result8 = (byte)result16;
+
+            /* Flags Affected: N,Z */
+            byte currentP = P.Register;
+            currentP &= 0x7D;
+            P.Register = currentP;
+            
+            P.N = ((result8 >> 7) & 1) == 1;
+            P.Z = result8 == 0;
+            
+            return result8;
+        }
         
         #endregion
         
@@ -282,13 +298,13 @@ namespace hdNes.Nes
             switch (_opcode)
             {
                 case 0x69: FetchAddress_Immediate(); break;
-                case 0x65: FetchAdress_ZeroPage();   break;
-                case 0x75: FetchAdress_ZeroPageX();  break;
+                case 0x65: FetchAddress_ZeroPage();   break;
+                case 0x75: FetchAddress_ZeroPageX();  break;
                 case 0x6D: FetchAddress_Absolute();  break;
-                case 0x7D: FetchAdress_AbsoluteX();  break;
-                case 0x79: FetchAdress_AbsoluteY();  break;
-                case 0x61: FetchAdress_IndirectX();  break;
-                case 0x71: FetchAdress_IndirectY();  break; //Indirect Indexed.
+                case 0x7D: FetchAddress_AbsoluteX();  break;
+                case 0x79: FetchAddress_AbsoluteY();  break;
+                case 0x61: FetchAddress_IndirectX();  break;
+                case 0x71: FetchAddress_IndirectY();  break; //Indirect Indexed.
             }
             
             byte M = 0x00; 
@@ -297,7 +313,27 @@ namespace hdNes.Nes
             A = result;
         }
         
-        
+        private void AND()
+        {
+            int cycles = 0;
+            
+            switch (_opcode)
+            {
+                case 0x29: FetchAddress_Immediate(); cycles -= 2; break;
+                case 0x25: FetchAddress_ZeroPage();  cycles -= 3; break;
+                case 0x35: FetchAddress_ZeroPageX(); cycles -= 4; break;
+                case 0x2D: FetchAddress_Absolute();  cycles -= 4; break;
+                case 0x3D: FetchAddress_AbsoluteX(); cycles -= 4; break;
+                case 0x39: FetchAddress_AbsoluteY(); cycles -= 4; break;
+                case 0x21: FetchAddress_IndirectX(); cycles -= 6; break;
+                case 0x31: FetchAddress_IndirectY(); cycles -= 5; break;
+            }
+            
+            byte M = 0x00;
+            M = Read(_absoluteAddress.word);
+            byte result = AND(A, M);
+            A = result;
+        }
 
         #endregion
         

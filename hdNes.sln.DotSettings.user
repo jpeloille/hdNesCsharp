@@ -19,7 +19,10 @@
   &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5e269525_002D9bd4_002D4c46_002Dbe51_002Df81b71c062f8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from ADC_Tests.cs #7" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:AND_Tests.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=81cb054f_002D5247_002D490e_002D979f_002D8a69556dde87/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ADC_Immediate #7" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;

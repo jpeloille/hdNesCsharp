@@ -17,4 +17,8 @@
       <ProjectReference Include="..\hdNes\hdNes.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="t.cs" />
+    </ItemGroup>
+
 </Project>
