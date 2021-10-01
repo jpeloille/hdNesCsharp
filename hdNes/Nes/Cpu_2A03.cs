@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using hdNes.Nes.Enums;
 using System.Runtime.Loader;
 using System.Threading;
 
@@ -197,6 +198,7 @@ namespace hdNes.Nes
             _absoluteAddress.high = Read(msb);
         }
         
+/*  [Obsolete]
         private void FetchAdress_IndirectY()
         {
             byte loa = Read(PC);
@@ -207,6 +209,21 @@ namespace hdNes.Nes
             
             ushort msb = (ushort)((loa + 1) & 0x00FF);
             _absoluteAddress.high = Read(msb);
+        }
+*/
+
+        private void FetchAdress_IndirectY()
+        {
+            byte loa = Read(PC);
+            PC++;
+
+            ushort lsb = (ushort)((loa) & 0x00FF);
+            _absoluteAddress.low = Read(lsb);
+            
+            ushort msb = (ushort)((loa + 1) & 0x00FF);
+            _absoluteAddress.high = Read(msb);
+
+            _absoluteAddress.word += Y;
         }
         
         private void FetchAdress_Indirect()
@@ -250,6 +267,15 @@ namespace hdNes.Nes
         #endregion
         
         #region Instructions implementation
+
+        [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
+        public class OpcodeDef : Attribute
+        {
+            public byte Opcode;
+            public int Cycles;
+            public AddressingModes AddressingMode;
+            
+        }
         
         private void ADC()
         {
@@ -262,7 +288,7 @@ namespace hdNes.Nes
                 case 0x7D: FetchAdress_AbsoluteX();  break;
                 case 0x79: FetchAdress_AbsoluteY();  break;
                 case 0x61: FetchAdress_IndirectX();  break;
-                case 0x71: FetchAdress_IndirectY();  break;
+                case 0x71: FetchAdress_IndirectY();  break; //Indirect Indexed.
             }
             
             byte M = 0x00; 
@@ -270,6 +296,8 @@ namespace hdNes.Nes
             byte result = ADC(A, M);
             A = result;
         }
+        
+        
 
         #endregion
         
@@ -292,6 +320,12 @@ namespace hdNes.Nes
             _absoluteAddress.word = 0x0000;
             _relativeAddress.word = 0x0000;
         }
+
+        public void UnitTest_Write(ushort address, byte data)
+        {
+            Write(address, data);
+        }
+        
         
         #endregion
     }
