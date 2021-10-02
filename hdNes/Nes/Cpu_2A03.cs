@@ -62,34 +62,34 @@ namespace hdNes.Nes
         private void GenerateInstructionTable()
         {
             //Add to memory to accumulator with carry
-            _instructionSet[0x69] = ADC; //Immediate
-            _instructionSet[0x65] = ADC; //ZeroPage
-            _instructionSet[0x75] = ADC; //ZeroPage, X
-            _instructionSet[0x6D] = ADC; //Absolute
-            _instructionSet[0x7D] = ADC; //Absolute, X
-            _instructionSet[0x79] = ADC; //Absolute, Y
-            _instructionSet[0x61] = ADC; //Indirect, X
-            _instructionSet[0x71] = ADC; //Indirect, Y
+            _instructionSet[0x69] = ADC; _instructionAddressMode[0x69] = FetchAddress_Immediate; 
+            _instructionSet[0x65] = ADC; _instructionAddressMode[0x65] = FetchAddress_ZeroPage;
+            _instructionSet[0x75] = ADC; _instructionAddressMode[0x75] = FetchAddress_ZeroPageX;
+            _instructionSet[0x6D] = ADC; _instructionAddressMode[0x6D] = FetchAddress_Absolute;
+            _instructionSet[0x7D] = ADC; _instructionAddressMode[0x7D] = FetchAddress_AbsoluteX;
+            _instructionSet[0x79] = ADC; _instructionAddressMode[0x79] = FetchAddress_AbsoluteY;
+            _instructionSet[0x61] = ADC; _instructionAddressMode[0x61] = FetchAddress_IndirectX;
+            _instructionSet[0x71] = ADC; _instructionAddressMode[0x71] = FetchAddress_IndirectY;
 
             //AND memory with accumulator
-            _instructionSet[0x29] = AND; //Immediate
-            _instructionSet[0x25] = AND; //ZeroPage
-            _instructionSet[0x35] = AND; //ZeroPage, X
-            _instructionSet[0x2D] = AND; //Absolute
-            _instructionSet[0x3D] = AND; //Absolute, X
-            _instructionSet[0x39] = AND; //Absolute, Y
-            _instructionSet[0x21] = AND; //Indirect, X
-            _instructionSet[0x31] = AND; //Indirect, Y
+            _instructionSet[0x29] = AND; _instructionAddressMode[0x29] = FetchAddress_Immediate;
+            _instructionSet[0x25] = AND; _instructionAddressMode[0x25] = FetchAddress_ZeroPage;
+            _instructionSet[0x35] = AND; _instructionAddressMode[0x35] = FetchAddress_ZeroPageX;
+            _instructionSet[0x2D] = AND; _instructionAddressMode[0x2D] = FetchAddress_Absolute;
+            _instructionSet[0x3D] = AND; _instructionAddressMode[0x3D] = FetchAddress_AbsoluteX;
+            _instructionSet[0x39] = AND; _instructionAddressMode[0x39] = FetchAddress_AbsoluteY;
+            _instructionSet[0x21] = AND; _instructionAddressMode[0x21] = FetchAddress_IndirectX;
+            _instructionSet[0x31] = AND; _instructionAddressMode[0x31] = FetchAddress_IndirectY;
             
             //ASL Shit Left One Bit (Memory or Accumulator)
-            _instructionSet[0x0A] = ASL; //Accumulator
-            _instructionSet[0x06] = ASL; //ZeroPage
-            _instructionSet[0x16] = ASL; //ZeroPage, X
-            _instructionSet[0x0E] = ASL; //Absolute
-            _instructionSet[0x1E] = ASL; //Absolute, X
+            _instructionSet[0x0A] = ASL; _instructionAddressMode[0x0A] = FetchAddress_Immediate;
+            _instructionSet[0x06] = ASL; _instructionAddressMode[0x06] = FetchAddress_ZeroPage;
+            _instructionSet[0x16] = ASL; _instructionAddressMode[0x16] = FetchAddress_ZeroPageX;
+            _instructionSet[0x0E] = ASL; _instructionAddressMode[0x0E] = FetchAddress_Absolute;
+            _instructionSet[0x1E] = ASL; _instructionAddressMode[0x1E] = FetchAddress_AbsoluteX;
             
             //BCC Branch on Carry Clear
-            _instructionSet[0x90] = BCC;
+            _instructionSet[0x90] = BCC; _instructionAddressMode[0x90] = FetchAddress_Relative;
         }
         
         #endregion
@@ -111,6 +111,7 @@ namespace hdNes.Nes
             while (count >= 1)
             {
                 FetchOpcode();
+                _instructionAddressMode[_opcode]();
                 _instructionSet[_opcode]();
                 count--;
             }
@@ -264,8 +265,10 @@ namespace hdNes.Nes
                 _relativeAddress.low = 0x00;
                 _relativeAddress.high = 0xFF;
             }
-                
         }
+        
+        private void NoAddressMode()
+        {}
         
         #endregion
 
@@ -315,18 +318,6 @@ namespace hdNes.Nes
         
         private void ADC()
         {
-            switch (_opcode)
-            {
-                case 0x69: FetchAddress_Immediate(); break;
-                case 0x65: FetchAddress_ZeroPage();   break;
-                case 0x75: FetchAddress_ZeroPageX();  break;
-                case 0x6D: FetchAddress_Absolute();  break;
-                case 0x7D: FetchAddress_AbsoluteX();  break;
-                case 0x79: FetchAddress_AbsoluteY();  break;
-                case 0x61: FetchAddress_IndirectX();  break;
-                case 0x71: FetchAddress_IndirectY();  break; //Indirect Indexed.
-            }
-            
             byte M = 0x00; 
             M = Read(_absoluteAddress.word);
             byte result = ADC(A, M);
@@ -335,19 +326,6 @@ namespace hdNes.Nes
         
         private void AND()
         {
-
-            switch (_opcode)
-            {
-                case 0x29: FetchAddress_Immediate(); cycles -= 2; break;
-                case 0x25: FetchAddress_ZeroPage();  cycles -= 3; break;
-                case 0x35: FetchAddress_ZeroPageX(); cycles -= 4; break;
-                case 0x2D: FetchAddress_Absolute();  cycles -= 4; break;
-                case 0x3D: FetchAddress_AbsoluteX(); cycles -= 4; break;
-                case 0x39: FetchAddress_AbsoluteY(); cycles -= 4; break;
-                case 0x21: FetchAddress_IndirectX(); cycles -= 6; break;
-                case 0x31: FetchAddress_IndirectY(); cycles -= 5; break;
-            }
-            
             byte M = 0x00;
             M = Read(_absoluteAddress.word);
             byte result = AND(A, M);
@@ -356,14 +334,6 @@ namespace hdNes.Nes
 
         private void ASL()
         {
-            switch (_opcode)
-            {
-                case 0x06: FetchAddress_ZeroPage();  cycles -= 5; break;
-                case 0x16: FetchAddress_ZeroPageX(); cycles -= 6; break;
-                case 0x0E: FetchAddress_Absolute();  cycles -= 6; break;
-                case 0x1E: FetchAddress_AbsoluteX(); cycles -= 7; break;
-            }
-
             byte operand = 0x00;
             
             if (_opcode == 0x0A) operand = A;
@@ -382,14 +352,11 @@ namespace hdNes.Nes
 
         private void BCC()
         {
-            FetchAddress_Relative();
-           
             if (!P.C)
             {
                 _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
                 PC = _absoluteAddress.word;
             }
-            
         }
         
         #endregion
