@@ -12,7 +12,7 @@ namespace hdNes.Cpu.Test
             Board board = new Board();
             board.Cartridge.UnitTest_Configure(new byte[]{0x90, 0x0A, 0x00});
             board.UnitTest_Reset();
-            board._cpu2A03.psr.C = true;
+            board._cpu2A03.C = true;
             
             board._cpu2A03.Tick(1);
             
@@ -28,7 +28,7 @@ namespace hdNes.Cpu.Test
             Board board = new Board();
             board.Cartridge.UnitTest_Configure(new byte[]{0x90, 0x0A, 0x00});
             board.UnitTest_Reset();
-            board._cpu2A03.psr.C = false;
+            board._cpu2A03.C = false;
             
             board._cpu2A03.Tick(1);
             
@@ -48,7 +48,7 @@ namespace hdNes.Cpu.Test
             board.CpuWrite(0x0F0, 0x90);
             board.CpuWrite(0x0F1, 0x79);
             board.CpuWrite(0x0F2, 0x00);
-            board._cpu2A03.psr.C = false;
+            board._cpu2A03.C = false;
             board._cpu2A03.utPC = 0xF0;
             
             board._cpu2A03.Tick(1);

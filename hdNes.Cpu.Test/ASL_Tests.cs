@@ -21,9 +21,9 @@ namespace hdNes.Cpu.Test
             Assert.AreEqual(0xFE, board.CpuRead(0x0000));
             
             //Check flags output:
-            Assert.AreEqual(false, board._cpu2A03.psr.Z);
-            Assert.AreEqual(false, board._cpu2A03.psr.C);
-            Assert.AreEqual(true, board._cpu2A03.psr.N);
+            Assert.AreEqual(false, board._cpu2A03.Z);
+            Assert.AreEqual(false, board._cpu2A03.C);
+            Assert.AreEqual(true, board._cpu2A03.N);
         }
         
         [Test]
@@ -43,9 +43,9 @@ namespace hdNes.Cpu.Test
             Assert.AreEqual(0x00, board.CpuRead(0x0000));
             
             //Check flags output:
-            Assert.AreEqual(true, board._cpu2A03.psr.Z);
-            Assert.AreEqual(true, board._cpu2A03.psr.C);
-            Assert.AreEqual(false, board._cpu2A03.psr.N);
+            Assert.AreEqual(true, board._cpu2A03.Z);
+            Assert.AreEqual(true, board._cpu2A03.C);
+            Assert.AreEqual(false, board._cpu2A03.N);
         }
         
         [Test]
@@ -65,9 +65,9 @@ namespace hdNes.Cpu.Test
             Assert.AreEqual(0x02, board.CpuRead(0x0000));
             
             //Check flags output:
-            Assert.AreEqual(false, board._cpu2A03.psr.Z);
-            Assert.AreEqual(false, board._cpu2A03.psr.C);
-            Assert.AreEqual(false, board._cpu2A03.psr.N);
+            Assert.AreEqual(false, board._cpu2A03.Z);
+            Assert.AreEqual(false, board._cpu2A03.C);
+            Assert.AreEqual(false, board._cpu2A03.N);
         }
         
         [Test]
@@ -87,9 +87,9 @@ namespace hdNes.Cpu.Test
             Assert.AreEqual(0x02, board.CpuRead(0x0001));
             
             //Check flags output:
-            Assert.AreEqual(false, board._cpu2A03.psr.Z);
-            Assert.AreEqual(false, board._cpu2A03.psr.C);
-            Assert.AreEqual(false, board._cpu2A03.psr.N);
+            Assert.AreEqual(false, board._cpu2A03.Z);
+            Assert.AreEqual(false, board._cpu2A03.C);
+            Assert.AreEqual(false, board._cpu2A03.N);
         }
         
         [Test]
@@ -108,9 +108,9 @@ namespace hdNes.Cpu.Test
             Assert.AreEqual(0x02, board.CpuRead(0x0000));
             
             //Check flags output:
-            Assert.AreEqual(false, board._cpu2A03.psr.Z);
-            Assert.AreEqual(false, board._cpu2A03.psr.C);
-            Assert.AreEqual(false, board._cpu2A03.psr.N);
+            Assert.AreEqual(false, board._cpu2A03.Z);
+            Assert.AreEqual(false, board._cpu2A03.C);
+            Assert.AreEqual(false, board._cpu2A03.N);
         }
         
         [Test]
@@ -130,9 +130,9 @@ namespace hdNes.Cpu.Test
             Assert.AreEqual(0x02, board.CpuRead(0x0001));
             
             //Check flags output:
-            Assert.AreEqual(false, board._cpu2A03.psr.Z);
-            Assert.AreEqual(false, board._cpu2A03.psr.C);
-            Assert.AreEqual(false, board._cpu2A03.psr.N);
+            Assert.AreEqual(false, board._cpu2A03.Z);
+            Assert.AreEqual(false, board._cpu2A03.C);
+            Assert.AreEqual(false, board._cpu2A03.N);
         }
     }
 }

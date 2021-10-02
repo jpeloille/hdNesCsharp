@@ -35,13 +35,47 @@ namespace hdNes.Nes
              }
          }
          
-         //Cpu registers & flag structure:
-         private byte A; //Accumulator
-         private byte X; //Index register X
-         private byte Y; //Index register Y
-         private byte S; //Stack pointer
+         //Cpu registers:
+         private byte A;    //Accumulator
+         private byte X;    //Index register X
+         private byte Y;    //Index register Y
+         private byte S;    //Stack pointer
          private ushort PC; //Program counter
-         private Cpu2A03FlagStructure P = new Cpu2A03FlagStructure(); //Processor status register
+         
+         //Cpu flags:
+         public bool C; //Carry flag,
+         public bool Z; //Zero flag,
+         public bool I; //IR0 inhibit flag, 
+         public bool D; //Decimal mode flag,
+         public bool B; //Brake command flag,
+         public bool V; //Overflow flag,
+         public bool N; //Negative flag.
+
+         public byte P
+         {
+             get
+             {
+                 return (byte) (
+                     (N ? 0x80 : 0) |
+                     (V ? 0x40 : 0) |
+                     (B ? 0x10 : 0) |
+                     (D ? 0x08 : 0) |
+                     (I ? 0x04 : 0) |
+                     (Z ? 0x02 : 0) |
+                     (C ? 0x01 : 0) | 0x20);
+             }
+             set
+             {
+                 N = (value & 0x80) != 0;
+                 V = (value & 0x40) != 0;
+                 B = (value & 0x10) != 0;
+                 D = (value & 0x08) != 0;
+                 I = (value & 0x04) != 0;
+                 Z = (value & 0x02) != 0;
+                 C = (value & 0x01) != 0;
+             }
+         }
+         //private Cpu2A03FlagStructure P = new Cpu2A03FlagStructure(); //Processor status register
         
          //Cpu emulations state variables:
          private byte _opcode;
@@ -100,7 +134,7 @@ namespace hdNes.Nes
         {
             PC = 0xFFFC;
             S = 0x00;
-            P.Register = 0xFF;
+            P = 0xFF;
             A = 0x00;
             _absoluteAddress.word = 0x0000;
             _relativeAddress.word = 0x0000;
@@ -276,22 +310,22 @@ namespace hdNes.Nes
         
         private byte ADC(byte A, byte M)
         {
-            P.C = false;
+            C = false;
             
             ushort result16 = (ushort)(A + M);
-            if (P.C) result16 += 1;
+            if (C) result16 += 1;
             
             byte result8 = (byte)result16;
 
             /* Flags Affected: N,V,Z,C */
-            byte currentP = P.Register;
+            byte currentP = P;
             currentP &= 0x3C;
-            P.Register = currentP;
+            P = currentP;
 
-            P.N = ((result8 >> 7) & 1) == 1;
-            P.V = ((result8 ^ A) & (result8 ^ M) & 0x80) == 0x80;
-            P.Z = result8 == 0;
-            P.C = result16 > 0xFF;
+            N = ((result8 >> 7) & 1) == 1;
+            V = ((result8 ^ A) & (result8 ^ M) & 0x80) == 0x80;
+            Z = result8 == 0;
+            C = result16 > 0xFF;
             
             return result8;
         }
@@ -302,12 +336,12 @@ namespace hdNes.Nes
             byte result8 = (byte)result16;
 
             /* Flags Affected: N,Z */
-            byte currentP = P.Register;
+            byte currentP = P;
             currentP &= 0x7D;
-            P.Register = currentP;
+            P = currentP;
             
-            P.N = ((result8 >> 7) & 1) == 1;
-            P.Z = result8 == 0;
+            N = ((result8 >> 7) & 1) == 1;
+            Z = result8 == 0;
             
             return result8;
         }
@@ -340,11 +374,11 @@ namespace hdNes.Nes
                 else operand = Read(_absoluteAddress.word);
 
             /* Faire le reset des flags impliqués */
-            P.C = ((operand >> 7) & 1 ) == 1;
+            C = ((operand >> 7) & 1 ) == 1;
             operand = (byte)(((operand << 1) | 0) & 0xFF);
             
-            P.N = ((operand >> 7) & 1) == 1;
-            P.Z = operand == 0;
+            N = ((operand >> 7) & 1) == 1;
+            Z = operand == 0;
 
             if (_opcode == 0x0A) A = operand;
                 else Write(_absoluteAddress.word, operand);
@@ -352,7 +386,7 @@ namespace hdNes.Nes
 
         private void BCC()
         {
-            if (!P.C)
+            if (!C)
             {
                 _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
                 PC = _absoluteAddress.word;
@@ -368,12 +402,12 @@ namespace hdNes.Nes
         public byte regY { get => Y; set => Y = value; }
         public ushort utPC { get => PC; set => PC = value; }
         
-        public Cpu2A03FlagStructure psr { get => P;  }
+        public byte psr { get => P;  }
         
         public void UnitTest_Reset()
         {
             PC = 0xC000;
-            P.Register = 0x24;
+            P = 0x24;
             S = 0xFD;
             A = 0x00;
             X = 0x00;
@@ -396,170 +430,4 @@ namespace hdNes.Nes
         #endregion
     }
 
-    public class Cpu2A03FlagStructure
-    {
-        [Flags]
-        public enum ProcessorStatusRegister : byte
-        {
-            Carry    = 1 << 0, //Carry flag,
-            Zero     = 1 << 1, //Zero flag,
-            Iro      = 1 << 2, //IR0 inhibit flag,
-            Decimal  = 1 << 3, //Decimal mode flag,
-            Brake    = 1 << 4, //Brake command flag,
-            None     = 1 << 5, //Unused bit,
-            Overflow = 1 << 6, //Overflow flag,
-            Negative = 1 << 7  //Negative flag.
-        }
-        
-        public bool C
-        {
-            get => _Carry;
-            set => SetFlags(FlagsType.Carry, value);
-        }
-        public bool Z
-        {
-            get => _Zero;
-            set => SetFlags(FlagsType.Zero, value);
-        }
-        public bool I
-        {
-            get => _Iro;
-            set => SetFlags(FlagsType.Iro, value);
-        }
-        public bool D
-        {
-            get => _Decimal;
-            set => SetFlags(FlagsType.Decimal, value);
-        }
-        public bool B
-        {
-            get => _Brake;
-            set => SetFlags(FlagsType.Brake, value);
-        }
-        public bool X
-        {
-            get => _None;
-            set => SetFlags(FlagsType.None, value);
-        }
-        public bool V
-        {
-            get => _Overflow;
-            set => SetFlags(FlagsType.Overflow, value);
-        }
-        public bool N
-        {
-            get => _Negative;
-            set => SetFlags(FlagsType.Negative, value);
-        }
-
-        public byte Register
-        {
-            get => GetRegister();
-            set => SetRegister(value);
-        }
-        
-
-        #region Private members
-
-        private ProcessorStatusRegister _cpuStatusRegister;
-        
-        private bool _Carry = false;
-        private bool _Zero = false;
-        private bool _Iro = false;
-        private bool _Decimal = false;
-        private bool _Brake = false;
-        private bool _None = false;
-        private bool _Overflow = false;
-        private bool _Negative = false;
-        
-        private enum FlagsType
-        {
-            Carry, 
-            Zero,
-            Iro,
-            Decimal,
-            Brake,
-            None,
-            Overflow,
-            Negative
-        }
-        
-        #endregion
-
-        public Cpu2A03FlagStructure()
-        {
-            _cpuStatusRegister = new ProcessorStatusRegister();
-            _cpuStatusRegister &= ~_cpuStatusRegister;
-        }
-        
-        #region Methods
-
-        private void SetFlags(FlagsType flagsType, bool state)
-        {
-            switch (flagsType)
-            {
-                case FlagsType.Carry:
-                    _Carry = state;
-                    _cpuStatusRegister &= ~(ProcessorStatusRegister.Carry);
-                    _cpuStatusRegister |= (_Carry ? ProcessorStatusRegister.Carry : 0);
-                    break;
-                case FlagsType.Zero:
-                    _Zero = state;
-                    _cpuStatusRegister &= ~(ProcessorStatusRegister.Zero);
-                    _cpuStatusRegister |= (_Zero ? ProcessorStatusRegister.Zero : 0);
-                    break;
-                case FlagsType.Iro:
-                    _Iro = state;
-                    _cpuStatusRegister &= ~(ProcessorStatusRegister.Iro);
-                    _cpuStatusRegister |= (_Iro ? ProcessorStatusRegister.Iro : 0);
-                    break;                    
-                case FlagsType.Decimal:
-                    _Decimal = state;
-                    _cpuStatusRegister &= ~(ProcessorStatusRegister.Decimal);
-                    _cpuStatusRegister |= (_Decimal ? ProcessorStatusRegister.Decimal : 0);
-                    break; 
-                case FlagsType.Brake:
-                    _Brake = state;
-                    _cpuStatusRegister &= ~(ProcessorStatusRegister.Brake);
-                    _cpuStatusRegister |= (_Brake ? ProcessorStatusRegister.Brake : 0);
-                    break; 
-                case FlagsType.None:
-                    _None = state;
-                    _cpuStatusRegister &= ~(ProcessorStatusRegister.None);
-                    _cpuStatusRegister |= (_None ? ProcessorStatusRegister.None : 0);
-                    break; 
-                case FlagsType.Overflow:
-                    _Overflow = state;
-                    _cpuStatusRegister &= ~(ProcessorStatusRegister.Overflow);
-                    _cpuStatusRegister |= (_Overflow ? ProcessorStatusRegister.Overflow : 0);
-                    break; 
-                case FlagsType.Negative:
-                    _Negative = state;
-                    _cpuStatusRegister &= ~(ProcessorStatusRegister.Negative);
-                    _cpuStatusRegister |= (_Negative ? ProcessorStatusRegister.Negative : 0);
-                    break; 
-            }
-        }
-        
-        private byte GetRegister()
-        {
-            byte cpuStatusRegister = (byte)(_cpuStatusRegister);
-            cpuStatusRegister &= 0xFF;
-            return cpuStatusRegister;
-        }
-
-        private void SetRegister(byte value)
-        {
-            SetFlags(FlagsType.Carry, ((value) & 0x01) == 1);
-            SetFlags(FlagsType.Zero, ((value >> 1) & 0x01) == 1);
-            SetFlags(FlagsType.Iro, ((value >> 2) & 0x01) == 1);
-            SetFlags(FlagsType.Decimal, ((value >> 3) & 0x01) == 1);
-            SetFlags(FlagsType.Brake, ((value >> 4) & 0x01) == 1);
-            SetFlags(FlagsType.None, ((value >> 5) & 0x01) == 1);
-            SetFlags(FlagsType.Overflow, ((value >> 6) & 0x01) == 1);
-            SetFlags(FlagsType.Negative, ((value >> 7) & 0x01) == 1);
-        }
-        #endregion
-
-    }
 }
