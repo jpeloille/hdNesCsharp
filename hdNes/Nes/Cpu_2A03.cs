@@ -347,12 +347,25 @@ namespace hdNes.Nes
             A = result8;
         }
         
+        //instruction method upadted due to new architecture (instructionAddressMode & new P register structure)
+            
         private void AND()
         {
+            //Get operand from memory:
             byte M = 0x00;
             M = Read(_absoluteAddress.word);
-            byte result = AND(A, M);
-            A = result;
+           
+            //Instruction Computation:
+            ushort result16 = (ushort)(A & M);
+            byte result8 = (byte)result16;
+
+            //Refresh flag status:
+            P &= 0x7D;
+            N = ((result8 >> 7) & 1) == 1;
+            Z = result8 == 0;
+            
+            //Set result:
+            A = result8;
         }
 
         private void ASL()
