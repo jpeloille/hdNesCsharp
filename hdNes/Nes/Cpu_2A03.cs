@@ -307,28 +307,6 @@ namespace hdNes.Nes
         #endregion
 
         #region Arythmetics methods
-        
-        private byte ADC(byte A, byte M)
-        {
-            C = false;
-            
-            ushort result16 = (ushort)(A + M);
-            if (C) result16 += 1;
-            
-            byte result8 = (byte)result16;
-
-            /* Flags Affected: N,V,Z,C */
-            byte currentP = P;
-            currentP &= 0x3C;
-            P = currentP;
-
-            N = ((result8 >> 7) & 1) == 1;
-            V = ((result8 ^ A) & (result8 ^ M) & 0x80) == 0x80;
-            Z = result8 == 0;
-            C = result16 > 0xFF;
-            
-            return result8;
-        }
 
         private byte AND(byte A, byte M)
         {
@@ -354,8 +332,19 @@ namespace hdNes.Nes
         {
             byte M = 0x00; 
             M = Read(_absoluteAddress.word);
-            byte result = ADC(A, M);
-            A = result;
+            
+            ushort result16 = (ushort)(A + M);
+            if (C) result16 += 1;
+            byte result8 = (byte)result16;
+
+            /* Flags Affected: N,V,Z,C */
+            P &= 0x3C;
+            N = ((result8 >> 7) & 1) == 1;
+            V = ((result8 ^ A) & (result8 ^ M) & 0x80) == 0x80;
+            Z = result8 == 0;
+            C = result16 > 0xFF;
+            
+            A = result8;
         }
         
         private void AND()
