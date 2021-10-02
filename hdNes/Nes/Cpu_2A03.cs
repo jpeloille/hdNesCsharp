@@ -18,6 +18,9 @@ namespace hdNes.Nes
          private delegate void Instruction();
          private Instruction[] _instructionSet = new Instruction[256];
          
+         private delegate void InstructionAddressMode();
+         private InstructionAddressMode[] _instructionAddressMode = new InstructionAddressMode[256];
+         
          //16 bits address structure:
          [StructLayout(LayoutKind.Explicit, Size = 16)]
          private struct WordAddress
