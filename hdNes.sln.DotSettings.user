@@ -53,13 +53,23 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bcafa1ce_002Dcc9c_002D4137_002D9075_002D035fc432c536/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from ADC_Tests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d80a9263_002D7230_002D45e1_002D9260_002Dff3a762d2456/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from ADC_Tests.cs #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d80a9263_002D7230_002D45e1_002D9260_002Dff3a762d2456/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from ADC_Tests.cs #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BIT_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:AND_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ASL_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BCC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BCS_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BEQ_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BMI_Tests.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=eef244f1_002D2a1e_002D4850_002D96ee_002Df08a6a26cfc3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ADC_Immediate #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=eef244f1_002D2a1e_002D4850_002D96ee_002Df08a6a26cfc3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ADC_Immediate #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.ADC_Tests.ADC_Immediate&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BIT_Tests.BIT&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
     &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ASL_Tests.cs&lt;/ProjectFile&gt;&#xD;
     &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
