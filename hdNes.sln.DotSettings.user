@@ -1,8 +1,24 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1183726f_002Dc122_002D4bf4_002D9525_002D991269d9ebab/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ADC_Immediate" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.ADC_Tests.ADC_Immediate&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=34253ce9_002D4493_002D4d7d_002Dbb0b_002Da4e8e5ac812e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Session #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.ADC_Tests.ADC_Immediate&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BIT_Tests.BIT&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ASL_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:AND_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BCC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BNE_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:CMP_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:DEC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3ff20038_002D2cd9_002D47ac_002Dbd5c_002Dd6fe028b9b9b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ADC_Immediate #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
@@ -11,6 +27,19 @@
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4e410aed_002D0daa_002D4dcd_002D81b6_002Dbcdd154d2711/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from ADC_Tests.cs #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4e7d77d3_002De01b_002D4239_002Da6e9_002D7c20b860931b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.ADC_Tests.ADC_Immediate&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BIT_Tests.BIT&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ASL_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:AND_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BCC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BNE_Tests.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=557522d3_002D24a9_002D400f_002D803f_002Df0dadcc08d7e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from ADC_Tests.cs #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
@@ -53,6 +82,20 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bcafa1ce_002Dcc9c_002D4137_002D9075_002D035fc432c536/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from ADC_Tests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d7380221_002Da19b_002D4b47_002D9ff6_002D0febc17992ee/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Session #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.ADC_Tests.ADC_Immediate&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BIT_Tests.BIT&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ASL_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:AND_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BCC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BNE_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:CMP_Tests.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d80a9263_002D7230_002D45e1_002D9260_002Dff3a762d2456/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from ADC_Tests.cs #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
@@ -66,14 +109,65 @@
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=eef244f1_002D2a1e_002D4850_002D96ee_002Df08a6a26cfc3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ADC_Immediate #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Or&gt;&#xD;
-    &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.ADC_Tests.ADC_Immediate&lt;/TestId&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BIT_Tests.BIT&lt;/TestId&gt;&#xD;
-    &lt;/TestAncestor&gt;&#xD;
-    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ASL_Tests.cs&lt;/ProjectFile&gt;&#xD;
-    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
-    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:AND_Tests.cs&lt;/ProjectFile&gt;&#xD;
-    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BCC_Tests.cs&lt;/ProjectFile&gt;&#xD;
-  &lt;/Or&gt;&#xD;
+  &lt;And&gt;&#xD;
+    &lt;Or&gt;&#xD;
+      &lt;TestAncestor&gt;&#xD;
+        &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.ADC_Tests.ADC_Immediate&lt;/TestId&gt;&#xD;
+        &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BIT_Tests.BIT&lt;/TestId&gt;&#xD;
+      &lt;/TestAncestor&gt;&#xD;
+      &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ASL_Tests.cs&lt;/ProjectFile&gt;&#xD;
+      &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+      &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:AND_Tests.cs&lt;/ProjectFile&gt;&#xD;
+      &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BCC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+      &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BNE_Tests.cs&lt;/ProjectFile&gt;&#xD;
+      &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:CMP_Tests.cs&lt;/ProjectFile&gt;&#xD;
+      &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:DEC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;/Or&gt;&#xD;
+    &lt;Not&gt;&#xD;
+      &lt;Or&gt;&#xD;
+        &lt;And&gt;&#xD;
+          &lt;TestAncestor&gt;&#xD;
+            &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.AND_Tests&lt;/TestId&gt;&#xD;
+          &lt;/TestAncestor&gt;&#xD;
+          &lt;Project Location="D:\Projects\Emulators\Nes 2021\hdNes\hdNes.Cpu.Test" Presentation="&amp;lt;hdNes.Cpu.Test&amp;gt;" /&gt;&#xD;
+          &lt;Namespace&gt;hdNes.Cpu.Test&lt;/Namespace&gt;&#xD;
+        &lt;/And&gt;&#xD;
+        &lt;And&gt;&#xD;
+          &lt;TestAncestor&gt;&#xD;
+            &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.ASL_Tests&lt;/TestId&gt;&#xD;
+          &lt;/TestAncestor&gt;&#xD;
+          &lt;Project Location="D:\Projects\Emulators\Nes 2021\hdNes\hdNes.Cpu.Test" Presentation="&amp;lt;hdNes.Cpu.Test&amp;gt;" /&gt;&#xD;
+          &lt;Namespace&gt;hdNes.Cpu.Test&lt;/Namespace&gt;&#xD;
+        &lt;/And&gt;&#xD;
+        &lt;And&gt;&#xD;
+          &lt;TestAncestor&gt;&#xD;
+            &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BCC_Tests&lt;/TestId&gt;&#xD;
+          &lt;/TestAncestor&gt;&#xD;
+          &lt;Project Location="D:\Projects\Emulators\Nes 2021\hdNes\hdNes.Cpu.Test" Presentation="&amp;lt;hdNes.Cpu.Test&amp;gt;" /&gt;&#xD;
+          &lt;Namespace&gt;hdNes.Cpu.Test&lt;/Namespace&gt;&#xD;
+        &lt;/And&gt;&#xD;
+        &lt;And&gt;&#xD;
+          &lt;TestAncestor&gt;&#xD;
+            &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BNE_Tests&lt;/TestId&gt;&#xD;
+          &lt;/TestAncestor&gt;&#xD;
+          &lt;Project Location="D:\Projects\Emulators\Nes 2021\hdNes\hdNes.Cpu.Test" Presentation="&amp;lt;hdNes.Cpu.Test&amp;gt;" /&gt;&#xD;
+          &lt;Namespace&gt;hdNes.Cpu.Test&lt;/Namespace&gt;&#xD;
+        &lt;/And&gt;&#xD;
+        &lt;And&gt;&#xD;
+          &lt;TestAncestor&gt;&#xD;
+            &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.CMP_Tests&lt;/TestId&gt;&#xD;
+          &lt;/TestAncestor&gt;&#xD;
+          &lt;Project Location="D:\Projects\Emulators\Nes 2021\hdNes\hdNes.Cpu.Test" Presentation="&amp;lt;hdNes.Cpu.Test&amp;gt;" /&gt;&#xD;
+          &lt;Namespace&gt;hdNes.Cpu.Test&lt;/Namespace&gt;&#xD;
+        &lt;/And&gt;&#xD;
+        &lt;And&gt;&#xD;
+          &lt;TestAncestor&gt;&#xD;
+            &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.DEC_Tests&lt;/TestId&gt;&#xD;
+          &lt;/TestAncestor&gt;&#xD;
+          &lt;Project Location="D:\Projects\Emulators\Nes 2021\hdNes\hdNes.Cpu.Test" Presentation="&amp;lt;hdNes.Cpu.Test&amp;gt;" /&gt;&#xD;
+          &lt;Namespace&gt;hdNes.Cpu.Test&lt;/Namespace&gt;&#xD;
+        &lt;/And&gt;&#xD;
+      &lt;/Or&gt;&#xD;
+    &lt;/Not&gt;&#xD;
+  &lt;/And&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -4,6 +4,7 @@ namespace hdNes.Cartridge.MMC
 {
     public class NROM : iMapper
     {
+        
         private int _prgBanks;
         private int _chrBanks;
         public NROM(int prgBanks, int chrBanks)

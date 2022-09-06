@@ -8,6 +8,18 @@
     <ItemGroup>
       <Compile Remove="Cartridge\iMapper.cs" />
       <Compile Remove="Cartridge\NROM.cs" />
+      <Compile Update="Nes\InstructionsTables.cs">
+        <DependentUpon>Cpu_2A03.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Nes\AddressingMode.cs">
+        <DependentUpon>Cpu_2A03.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Nes\InstructionssMethods.cs">
+        <DependentUpon>Cpu_2A03.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Nes\UnitTestCpuMethods.cs">
+        <DependentUpon>Cpu_2A03.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

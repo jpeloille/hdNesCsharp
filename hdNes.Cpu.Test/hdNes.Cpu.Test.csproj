@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+        <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.170.0" />
         <PackageReference Include="NUnit" Version="3.13.1" />
         <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
         <PackageReference Include="coverlet.collector" Version="3.0.2" />
@@ -18,6 +19,16 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Remove="AND_Tests.cs" />
+      <Compile Remove="ASL_Tests.cs" />
+      <Compile Remove="BCC_Tests.cs" />
+      <Compile Remove="BCS_Tests.cs" />
+      <Compile Remove="BEQ_Tests.cs" />
+      <Compile Remove="BIT_Tests.cs" />
+      <Compile Remove="BMI_Tests.cs" />
+      <Compile Remove="BNE_Tests.cs" />
+      <Compile Remove="CMP_Tests.cs" />
+      <Compile Remove="DEC_Tests.cs" />
       <Compile Remove="t.cs" />
     </ItemGroup>
 

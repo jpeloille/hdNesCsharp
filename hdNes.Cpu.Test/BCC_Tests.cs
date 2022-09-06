@@ -45,9 +45,9 @@ namespace hdNes.Cpu.Test
             board.Cartridge.UnitTest_Configure(new byte[]{0x00});
             board.UnitTest_Reset();
             
-            board.CpuWrite(0x0F0, 0x90);
-            board.CpuWrite(0x0F1, 0x79);
-            board.CpuWrite(0x0F2, 0x00);
+            board.CpuWrite(0xF0, 0x90);
+            board.CpuWrite(0xF1, 0x79);
+            board.CpuWrite(0xF2, 0x00);
             board._cpu2A03.C = false;
             board._cpu2A03.utPC = 0xF0;
             

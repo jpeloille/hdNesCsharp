@@ -3,9 +3,12 @@ using hdNes.Cartridge;
 
 namespace hdNes.Nes
 {
-    public class Board
+     public class Board
     {
-        public Cpu_2A03 _cpu2A03;
+        //public readonly Cpu_2A03 cpu2A03;
+
+        public readonly Ricoh2A03 cpu;
+
         /* Declared as public only for unit testing. */
         
         private byte[] CpuRam = new byte[0x2048];
@@ -13,18 +16,21 @@ namespace hdNes.Nes
 
         public Board()
         {
-            _cpu2A03 = new Cpu_2A03(this);
+            //cpu2A03 = new Cpu_2A03(this);
+            cpu = new Ricoh2A03(this);
             Cartridge = new Cartridge.Cartridge();
         }
 
         public void Reset()
         {
-            _cpu2A03.Reset();
+            //cpu2A03.Reset();
+            cpu.SetInResetState();
         }
 
         public void UnitTest_Reset()
         {
-            _cpu2A03.UnitTest_Reset();
+            //cpu2A03.UnitTest_Reset();
+            
         }
         
         public byte CpuRead(ushort address)
@@ -52,16 +58,22 @@ namespace hdNes.Nes
             {
                 //Controller.
             }
-                
+            
             return data;
         }
 
         public void CpuWrite(ushort address, byte data)
         {
-            if ((address >= 0x0000) && (address <= 0x1FFF))
+            if (Cartridge.cpuWrite(address,data))
+            {
+                
+            }
+            else if (address <= 0x1FFF)
             {
                 CpuRam[address & 0x07FF] = data;
-            }
+            }            
+
+
         }
         
     }

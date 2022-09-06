@@ -136,7 +136,6 @@ namespace hdNes.Cartridge
             {
                 _prgRom[i] = UnitTestRom[i];
             }
-            
         }
 
         public bool cpuRead(ushort address, ref byte data)
@@ -153,7 +152,6 @@ namespace hdNes.Cartridge
                 {
                     data = _prgRom[mappedAdress];
                 }
-
                 return true;
             }
             else
@@ -165,7 +163,15 @@ namespace hdNes.Cartridge
 
         public bool cpuWrite(ushort address, byte data)
         {
-            return false;
+            if (address >= 0x8000 && address <= 0xFFFF)
+            {
+                _prgRom[address & 0x3FFF] = data;   
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool ppuRead(ushort address, out byte data)
