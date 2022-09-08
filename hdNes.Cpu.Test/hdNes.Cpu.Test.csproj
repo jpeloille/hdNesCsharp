@@ -28,7 +28,6 @@
       <Compile Remove="BMI_Tests.cs" />
       <Compile Remove="BNE_Tests.cs" />
       <Compile Remove="CMP_Tests.cs" />
-      <Compile Remove="DEC_Tests.cs" />
       <Compile Remove="t.cs" />
     </ItemGroup>
 

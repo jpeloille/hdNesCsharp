@@ -11,19 +11,19 @@ namespace hdNes.Cpu.Test
             //Initialize fictive board:
             Board board = new Board();
             board.Cartridge.UnitTest_Configure(new byte[] { 0xC6, 0x00 });
-            board.UnitTest_Reset();
-            board._cpu2A03.UnitTest_Write(0x00,0x02);
+            board.cpu.SetInUnitTestInitialState();
+            board.cpu.Write(0x00,0x02);
             
-            board._cpu2A03.Tick(1);
+            board.cpu.Tick(1);
 
             //Verify Memory Values
-            Assert.AreNotEqual(0x02, board._cpu2A03.UnitTest_Read(0x00));
-            Assert.AreEqual(0x01, board._cpu2A03.UnitTest_Read(0x00));
+            Assert.AreNotEqual(0x02, board.cpu.Read(0x00));
+            Assert.AreEqual(0x01, board.cpu.Read(0x00));
 
             //Verify Flags
-            Assert.AreEqual(false, board._cpu2A03.Z);
-            Assert.AreEqual(false, board._cpu2A03.C);
-            Assert.AreEqual(false, board._cpu2A03.N);
+            Assert.AreEqual(false, board.cpu.Z);
+            Assert.AreEqual(false, board.cpu.C);
+            Assert.AreEqual(false, board.cpu.N);
         }
         
         [Test]
@@ -32,19 +32,19 @@ namespace hdNes.Cpu.Test
             //Initialize fictive board:
             Board board = new Board();
             board.Cartridge.UnitTest_Configure(new byte[] { 0xC6, 0x00 });
-            board.UnitTest_Reset();
-            board._cpu2A03.UnitTest_Write(0x00,0x01);
+            board.cpu.SetInUnitTestInitialState();
+            board.cpu.Write(0x00,0x01);
             
-            board._cpu2A03.Tick(1);
+            board.cpu.Tick(1);
 
             //Verify Memory Values
-            Assert.AreNotEqual(0x01, board._cpu2A03.UnitTest_Read(0x00));
-            Assert.AreEqual(0x00, board._cpu2A03.UnitTest_Read(0x00));
+            Assert.AreNotEqual(0x01, board.cpu.Read(0x00));
+            Assert.AreEqual(0x00, board.cpu.Read(0x00));
 
             //Verify Flags
-            Assert.AreEqual(true, board._cpu2A03.Z);
-            Assert.AreEqual(false, board._cpu2A03.C);
-            Assert.AreEqual(false, board._cpu2A03.N);
+            Assert.AreEqual(true, board.cpu.Z);
+            Assert.AreEqual(false, board.cpu.C);
+            Assert.AreEqual(false, board.cpu.N);
         }
         
         [Test]
@@ -53,19 +53,19 @@ namespace hdNes.Cpu.Test
             //Initialize fictive board:
             Board board = new Board();
             board.Cartridge.UnitTest_Configure(new byte[] { 0xC6, 0x00 });
-            board.UnitTest_Reset();
-            board._cpu2A03.UnitTest_Write(0x00,0x00);
+            board.cpu.SetInUnitTestInitialState();
+            board.cpu.Write(0x00,0x00);
             
-            board._cpu2A03.Tick(1);
+            board.cpu.Tick(1);
 
             //Verify Memory Values
-            Assert.AreNotEqual(0x00, board._cpu2A03.UnitTest_Read(0x00));
-            Assert.AreEqual(0xFF, board._cpu2A03.UnitTest_Read(0x00));
+            Assert.AreNotEqual(0x00, board.cpu.Read(0x00));
+            Assert.AreEqual(0xFF, board.cpu.Read(0x00));
 
             //Verify Flags
-            Assert.AreEqual(false, board._cpu2A03.Z);
-            Assert.AreEqual(false, board._cpu2A03.C);
-            Assert.AreEqual(true, board._cpu2A03.N);
+            Assert.AreEqual(false, board.cpu.Z);
+            Assert.AreEqual(false, board.cpu.C);
+            Assert.AreEqual(true, board.cpu.N);
         }
         
         [Test]
@@ -74,20 +74,20 @@ namespace hdNes.Cpu.Test
             //Initialize fictive board:
             Board board = new Board();
             board.Cartridge.UnitTest_Configure(new byte[] { 0xD6, 0x00 });
-            board.UnitTest_Reset();
-            board._cpu2A03.regX = 0x01;
-            board._cpu2A03.UnitTest_Write(0x01,0x02);
+            board.cpu.SetInUnitTestInitialState();
+            board.cpu.X = 0x01;
+            board.cpu.Write(0x01,0x02);
             
-            board._cpu2A03.Tick(1);
+            board.cpu.Tick(1);
 
             //Verify Memory Values
-            Assert.AreNotEqual(0x02, board._cpu2A03.UnitTest_Read(0x01));
-            Assert.AreEqual(0x01, board._cpu2A03.UnitTest_Read(0x01));
+            Assert.AreNotEqual(0x02, board.cpu.Read(0x01));
+            Assert.AreEqual(0x01, board.cpu.Read(0x01));
 
             //Verify Flags
-            Assert.AreEqual(false, board._cpu2A03.Z);
-            Assert.AreEqual(false, board._cpu2A03.C);
-            Assert.AreEqual(false, board._cpu2A03.N);
+            Assert.AreEqual(false, board.cpu.Z);
+            Assert.AreEqual(false, board.cpu.C);
+            Assert.AreEqual(false, board.cpu.N);
         }
     }
 }

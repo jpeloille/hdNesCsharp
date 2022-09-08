@@ -1,0 +1,4 @@
+namespace 
+{
+    public record t();
+}
