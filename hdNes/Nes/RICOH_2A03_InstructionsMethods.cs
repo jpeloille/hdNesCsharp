@@ -219,13 +219,27 @@ namespace hdNes.Nes
         #endregion
 
         #region BRK - !!! Not implemented !!!
-        //Action : force break.
-        //Operation : force interrupt PC +2.
+        //Action : force break.Store the PC of the byte next the instruction. Store the status register.
+        //Operation : force interrupt PC. PCL = 0xFFFE & PCH = 0xFFFF;
         //Flags : I = 1.
-        [InstructionAttribute(Mnemonic = "BRK", AddressingMode = Relative, OpCode = 0x90, NoCycles = 2)]
+        [InstructionAttribute(Mnemonic = "BRK", AddressingMode = Implied, OpCode = 0x00, NoCycles = 7)]
         private void BRK()
         {
-            //! To implement !//
+            PC++;
+            
+            Write((ushort)(0x100 + S), (byte)(PC >> 8 & 0x00FF));
+            S--;
+            
+            Write((ushort)(0x100 + S), (byte)(PC & 0x00FF));
+            S--;
+            
+            Write((ushort)(0x100 + S), P);
+            S--;
+
+            var PCL = Read(0xFFFE);
+            var PCH = Read(0XFFFF);
+            PC = (ushort)(((PCH << 8) & 0xFF00) | PCL);
+
         }
         #endregion
 
@@ -422,6 +436,90 @@ namespace hdNes.Nes
             A = result8;
             N = ((result8 >> 7) & 1) == 1;
             Z = result8 == 0;
+        }
+        #endregion
+
+        #region INC
+        //Action : increment memory by one.
+        //Operation : M + 1 -> M.
+        //Flags : N,Z.
+        [InstructionAttribute(Mnemonic = "INC", AddressingMode = ZeroPage,  OpCode = 0xE6, NoCycles = 5)]
+        [InstructionAttribute(Mnemonic = "INC", AddressingMode = ZeroPageX, OpCode = 0xF6, NoCycles = 6)]
+        [InstructionAttribute(Mnemonic = "INC", AddressingMode = Absolute,  OpCode = 0xEE, NoCycles = 6)]
+        [InstructionAttribute(Mnemonic = "INC", AddressingMode = AbsoluteX, OpCode = 0xFE, NoCycles = 7)]
+        private void INC()
+        {
+            M = Read(_absoluteAddress.word);
+            result8 = (byte)(M + 1);
+            Write(_absoluteAddress.word, result8);
+            N = ((result8 >> 7) & 1) == 1;
+            Z = result8 == 0;         
+        }
+        #endregion
+
+        #region INX
+        //Action : increment index X by one.
+        //Operation : X + 1 -> X.
+        //Flags : N, Z.
+        [InstructionAttribute(Mnemonic = "INX", AddressingMode = Implied, OpCode = 0xE8, NoCycles = 2)]
+        private void INX()
+        {
+            result8 = (byte)(X + 1);
+            X = result8;
+            N = ((result8 >> 7) & 1) == 1;
+            Z = result8 == 0;  
+        }
+        #endregion
+
+        #region INY
+        //Action : increment index Y by one.
+        //Operation : Y + 1 -> Y.
+        //Flags : N, Z.
+        [InstructionAttribute(Mnemonic = "INY", AddressingMode = Implied, OpCode = 0xC8, NoCycles = 2)]
+        private void INY()
+        {
+            result8 = (byte)(Y + 1);
+            Y = result8;
+            N = ((result8 >> 7) & 1) == 1;
+            Z = result8 == 0;  
+        }
+        #endregion
+
+        #region JMP
+        //Action : jump to new location.
+        //Operation : (PC + 1) -> PCL, (PC + 2) -> PCH.
+        //Flags : 6.
+        [InstructionAttribute(Mnemonic = "JMP", AddressingMode = Implied, OpCode = 0x4C, NoCycles = 3)]
+        [InstructionAttribute(Mnemonic = "JMP", AddressingMode = Implied, OpCode = 0x6C, NoCycles = 3)]
+        private void JMP()
+        {
+            switch (_opcode)
+            {
+                case 0X4C: //Absolute JMP
+                    byte PCL = Read(PC);
+                    PC++;
+                    byte PCH = Read(PC);
+                    PC++;
+
+                    PC = (ushort)((PCH << 8) & 0xFF00);
+                    PC = (ushort)(PC | PCL);
+                    break;
+                case 0X6C: //Indirect JMP
+                    byte IAL = Read(PC);
+                    PC++;
+                    byte IAH = Read(PC);
+                    PC++;
+
+                    ushort ADL_Adress = (ushort)(((IAH << 8) & 0XFF00) | IAL);
+                    byte ADL = Read(ADL_Adress);
+
+                    IAL = (byte)(IAL + 0X01);
+                    ushort ADH_Adress = (ushort)(((IAH << 8) & 0XFF00) | IAL);
+                    byte ADH = Read(ADH_Adress);
+
+                    PC = (ushort)(((ADH << 8) & 0xFF00) | ADL);
+                    break;
+            }
         }
         #endregion
     }

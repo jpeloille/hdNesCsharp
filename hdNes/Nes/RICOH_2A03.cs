@@ -10,7 +10,7 @@ namespace hdNes.Nes
 {
     public sealed partial class Ricoh2A03
     {
-        //Board where the component is tied to:
+         //Board where the component is tied to:
         private Board _board;
 
         //Instructions set container:
@@ -151,7 +151,7 @@ namespace hdNes.Nes
         public void SetInResetState()
         {
             PC = 0xFFFC;
-            S = 0x00;
+            S = 0xFD;
             P = 0xFF;
             A = 0x00;
             _absoluteAddress.word = 0x0000;
@@ -162,7 +162,7 @@ namespace hdNes.Nes
         {
             PC = 0xC000;
             P = 0x24;
-            S = 0xFD;
+            S = 0xFF;
             A = 0x00;
             X = 0x00;
             Y = 0x00;
@@ -204,6 +204,15 @@ namespace hdNes.Nes
             _board.CpuWrite(address, data);
         }
 
+        private void Push()
+        {
+            
+        }
+
+        private void Pull()
+        {
+            
+        }
         #endregion
     }
 }

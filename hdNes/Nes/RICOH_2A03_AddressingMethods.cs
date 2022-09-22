@@ -29,7 +29,7 @@ namespace hdNes.Nes
         {
             public AddressingMode AddressingMode = AddressingMode.None;
         }
-
+        
         [AddressingModeAttribute(AddressingMode = AddressingMode.Accumulator)]
         [AddressingModeAttribute(AddressingMode = AddressingMode.Implied)]
         private void ImpliedOrAccumulator()
