@@ -119,7 +119,7 @@ namespace hdNes.Cpu.Test
         {
             //Initialize fictive board:
             Board board = new Board();
-            board.Cartridge.UnitTest_Configure(new byte[] {0x6D, 0x03, 0xC0, 0x40});
+            board.Cartridge.UnitTest_Configure(new byte[] { 0x6D, 0x03, 0xC0, 0x40 });
             board.cpu.SetInUnitTestInitialState();
             board.cpu.A = 0x40;
             

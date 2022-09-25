@@ -49,7 +49,7 @@ namespace hdNes.Nes
         {
             _absoluteAddress.low = Read(PC);
             PC++;
-
+            
             _absoluteAddress.high = Read(PC);
             PC++;
         } //Confirmed 26-09-2021
@@ -138,14 +138,16 @@ namespace hdNes.Nes
         [AddressingModeAttribute(AddressingMode = AddressingMode.Indirect)]
         private void FetchAddress_Indirect()
         {
-            byte loa = Read(PC);
+            /*byte loa = Read(PC);
             PC++;
 
             ushort lsb = (ushort)(loa & 0x00FF);
             _absoluteAddress.low = Read(lsb);
 
             ushort msb = (ushort)((loa + 1) & 0x00FF);
-            _absoluteAddress.high = Read(msb);
+            _absoluteAddress.high = Read(msb);*/
+            
+            //todo : Correct IND memory access method.
         }
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.Relative)]

@@ -9,7 +9,7 @@
     &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BRK_Tests.cs&lt;/ProjectFile&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7f5b260d_002De271_002D4ed4_002D873c_002Da0e22f3f3f49/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7f5b260d_002De271_002D4ed4_002D873c_002Da0e22f3f3f49/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Session #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:EOR_Tests.cs&lt;/ProjectFile&gt;&#xD;
     &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
@@ -19,6 +19,7 @@
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BRK_Tests.BRK&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:JSR_Tests.cs&lt;/ProjectFile&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
@@ -40,6 +41,20 @@
     &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:JMP_Tests.cs&lt;/ProjectFile&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=da8984e0_002D8acf_002D4b92_002Da05f_002Dfacc89f49d40/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:EOR_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:ADC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:DEC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:INC_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:JMP_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BRK_Tests.BRK&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BRK_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:JSR_Tests.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e7d4f7e8_002De728_002D4552_002D86a1_002D59c3b6fbf383/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Session #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:EOR_Tests.cs&lt;/ProjectFile&gt;&#xD;
@@ -50,6 +65,8 @@
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;NUnit3x::5559B2D2-96E8-4097-8B9B-1ADD4A10F25B::.NETCoreApp,Version=v3.1::hdNes.Cpu.Test.BRK_Tests.BRK&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:BRK_Tests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;5559B2D2-96E8-4097-8B9B-1ADD4A10F25B/f:JSR_Tests.cs&lt;/ProjectFile&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

@@ -218,7 +218,7 @@ namespace hdNes.Nes
         }
         #endregion
 
-        #region BRK - !!! Not implemented !!!
+        #region BRK
         //Action : force break.Store the PC of the byte next the instruction. Store the status register.
         //Operation : force interrupt PC. PCL = 0xFFFE & PCH = 0xFFFF;
         //Flags : I = 1.
@@ -489,26 +489,22 @@ namespace hdNes.Nes
         //Action : jump to new location.
         //Operation : (PC + 1) -> PCL, (PC + 2) -> PCH.
         //Flags : 6.
-        [InstructionAttribute(Mnemonic = "JMP", AddressingMode = Implied, OpCode = 0x4C, NoCycles = 3)]
-        [InstructionAttribute(Mnemonic = "JMP", AddressingMode = Implied, OpCode = 0x6C, NoCycles = 3)]
+        [InstructionAttribute(Mnemonic = "JMP", AddressingMode = Absolute, OpCode = 0x4C, NoCycles = 3)]
+        [InstructionAttribute(Mnemonic = "JMP", AddressingMode = Indirect, OpCode = 0x6C, NoCycles = 3)]
         private void JMP()
         {
             switch (_opcode)
             {
                 case 0X4C: //Absolute JMP
-                    byte PCL = Read(PC);
-                    PC++;
-                    byte PCH = Read(PC);
-                    PC++;
+                    byte PCL = _absoluteAddress.low;
+                    byte PCH = _absoluteAddress.high;
 
                     PC = (ushort)((PCH << 8) & 0xFF00);
                     PC = (ushort)(PC | PCL);
                     break;
                 case 0X6C: //Indirect JMP
-                    byte IAL = Read(PC);
-                    PC++;
-                    byte IAH = Read(PC);
-                    PC++;
+                    byte IAL = _absoluteAddress.low;
+                    byte IAH = _absoluteAddress.high;
 
                     ushort ADL_Adress = (ushort)(((IAH << 8) & 0XFF00) | IAL);
                     byte ADL = Read(ADL_Adress);
@@ -521,6 +517,26 @@ namespace hdNes.Nes
                     break;
             }
         }
+        #endregion
+        //Action : jump to new location saving return address.
+        //Operation : (PC + 1) -> PCL, (PC + 2) -> PCH.
+        //Flags : 6.
+        [InstructionAttribute(Mnemonic = "JSR", AddressingMode = Absolute, OpCode = 0x20, NoCycles = 6)]
+        private void JSR()
+        {
+            byte PCL = _absoluteAddress.low;
+            byte PCH = _absoluteAddress.high;
+
+            Write((ushort)(0x100+S), PCH);
+            S--;
+            Write((ushort)(0x100+S), PCL);
+            S--;
+
+            PC = (ushort)((PCH << 8) & 0xFF00);
+            PC = (ushort)(PC | PCL);
+        }
+        #region JSR
+        
         #endregion
     }
 }
