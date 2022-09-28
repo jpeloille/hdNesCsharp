@@ -29,7 +29,7 @@ namespace hdNes.Nes
         private void ADC()
         {
             //Get operand from memory:
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             M &= 0xFF;
 
             //Instruction Computation:
@@ -64,7 +64,7 @@ namespace hdNes.Nes
         private void AND()
         {
             //Get operand from memory:
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             M &= 0xFF;
 
             //Instruction Computation:
@@ -93,7 +93,7 @@ namespace hdNes.Nes
         private void ASL()
         {
             if (_opcode == 0x0A) operand = A;
-            else operand = Read(_decodedAddress.word);
+            else operand = Read(_physicalAddress.word);
             operand &= 0xFF;
 
             /* Faire le reset des flags impliqués */
@@ -104,7 +104,7 @@ namespace hdNes.Nes
             Z = operand == 0;
 
             if (_opcode == 0x0A) A = operand;
-            else Write(_decodedAddress.word, operand);
+            else Write(_physicalAddress.word, operand);
         }
         #endregion
 
@@ -117,8 +117,8 @@ namespace hdNes.Nes
         {
             if (!C)
             {
-                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _decodedAddress.word;
+                _physicalAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _physicalAddress.word;
             }
         }
         #endregion
@@ -132,8 +132,8 @@ namespace hdNes.Nes
         {
             if (C)
             {
-                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _decodedAddress.word;
+                _physicalAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _physicalAddress.word;
             }
         }
         #endregion
@@ -147,8 +147,8 @@ namespace hdNes.Nes
         {
             if (Z)
             {
-                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _decodedAddress.word;
+                _physicalAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _physicalAddress.word;
             }
         }
         #endregion
@@ -164,7 +164,7 @@ namespace hdNes.Nes
         private void BIT()
         {
             //Get operand from memory:
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             M &= 0xFF;
 
             Z = (A & M) == 0;
@@ -182,8 +182,8 @@ namespace hdNes.Nes
         {
             if (N)
             {
-                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _decodedAddress.word;
+                _physicalAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _physicalAddress.word;
             }
         }
         #endregion
@@ -197,8 +197,8 @@ namespace hdNes.Nes
         {
             if (!Z)
             {
-                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _decodedAddress.word;
+                _physicalAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _physicalAddress.word;
             }
         }
         #endregion
@@ -212,8 +212,8 @@ namespace hdNes.Nes
         {
             if (!N)
             {
-                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _decodedAddress.word;
+                _physicalAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _physicalAddress.word;
             }
         }
         #endregion
@@ -252,8 +252,8 @@ namespace hdNes.Nes
         {
             if (!V)
             {
-                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _decodedAddress.word;
+                _physicalAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _physicalAddress.word;
             }
         }
         #endregion
@@ -267,8 +267,8 @@ namespace hdNes.Nes
         {
             if (V)
             {
-                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _decodedAddress.word;
+                _physicalAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _physicalAddress.word;
             }
         }
         #endregion
@@ -331,7 +331,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "CMP", AddressingMode = IndirectY, OpCode = 0xD1, NoCycles = 5)]
         private void CMP()
         {
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             Z = (A == M);
             C = (A >= M);
             N = (((A - M) >> 7) & 1) == 1;
@@ -347,7 +347,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "CPX", AddressingMode = Absolute,  OpCode = 0xEC, NoCycles = 4)]
         private void CPX()
         {
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             Z = (X == M);
             C = (X >= M);
             N = (((X - M) >> 7) & 1) == 1;
@@ -363,7 +363,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "CPY", AddressingMode = Absolute,  OpCode = 0xCC, NoCycles = 4)]
         private void CPY()
         {
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             Z = (Y == M);
             C = (Y >= M);
             N = (((Y - M) >> 7) & 1) == 1;
@@ -380,9 +380,9 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "DEC", AddressingMode = AbsoluteX, OpCode = 0xDE, NoCycles = 7)]
         private void DEC()
         {
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             result8 = (byte)(M - 0x01);
-            Write(_decodedAddress.word, result8);
+            Write(_physicalAddress.word, result8);
             N = ((result8 >> 7) & 1) == 1;
             Z = result8 == 0;
         }
@@ -431,7 +431,7 @@ namespace hdNes.Nes
 
         private void EOR()
         {
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             result8 = (byte)(A ^ M);
             A = result8;
             N = ((result8 >> 7) & 1) == 1;
@@ -449,9 +449,9 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "INC", AddressingMode = AbsoluteX, OpCode = 0xFE, NoCycles = 7)]
         private void INC()
         {
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             result8 = (byte)(M + 1);
-            Write(_decodedAddress.word, result8);
+            Write(_physicalAddress.word, result8);
             N = ((result8 >> 7) & 1) == 1;
             Z = result8 == 0;         
         }
@@ -493,8 +493,8 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "JMP", AddressingMode = Indirect, OpCode = 0x6C, NoCycles = 3)]
         private void JMP()
         {
-            byte PCL = _decodedAddress.low;
-            byte PCH = _decodedAddress.high;
+            byte PCL = _physicalAddress.low;
+            byte PCH = _physicalAddress.high;
             
             PC = (ushort)(((PCH << 8) & 0xFF00) | PCL);
         }
@@ -507,8 +507,8 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "JSR", AddressingMode = Absolute, OpCode = 0x20, NoCycles = 6)]
         private void JSR()
         {
-            byte PCL = _decodedAddress.low;
-            byte PCH = _decodedAddress.high;
+            byte PCL = _physicalAddress.low;
+            byte PCH = _physicalAddress.high;
 
             Write((ushort)(0x100+S), PCH);
             S--;
@@ -535,7 +535,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "LDA", AddressingMode = IndirectY, OpCode = 0xB1, NoCycles = 5)]
         private void LDA()
         {
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             A = M;
             
             //Refresh flag status:
@@ -556,7 +556,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "LDX", AddressingMode = AbsoluteY, OpCode = 0xBE, NoCycles = 4)]
         private void LDx()
         {
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             X = M;
             
             //Refresh flag status:
@@ -577,7 +577,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "LDY", AddressingMode = AbsoluteX, OpCode = 0xBC, NoCycles = 4)]
         private void LDY()
         {
-            M = Read(_decodedAddress.word);
+            M = Read(_physicalAddress.word);
             Y = M;
             
             //Refresh flag status:
@@ -598,14 +598,22 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "LSR", AddressingMode = AbsoluteX,   OpCode = 0x5E, NoCycles = 7)]
         private void LSR()
         {
-            if (_instructionAttributes[_opcode].AddressingMode == AddressingMode.Immediate)
+            P &= 0x7C;
+            if (_instructionAttributes[_opcode].AddressingMode == Accumulator)
             {
-                C = (A << 7) == 1;
-                
+                C = (A & 0x01) == 1;
+                A = (byte)((A >> 1) & 0xFF);
+                N = ((A >> 7) & 1) == 1;
+                Z = A == 0;
             }
             else
             {
-                
+                M = Read(_physicalAddress.word);
+                C = (M & 0x01) == 1;
+                M = (byte)((M >> 1) & 0xFF);
+                Write(_physicalAddress.word, M);
+                N = ((M >> 7) & 1) == 1;
+                Z = M == 0;
             }
         }
         #endregion
