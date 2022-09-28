@@ -79,7 +79,7 @@ namespace hdNes.Nes
 
         //Cpu emulations state variables:
         private byte _opcode;
-        private WordAddress _absoluteAddress;
+        private WordAddress _decodedAddress;
         private WordAddress _relativeAddress;
 
         private byte M;
@@ -154,7 +154,7 @@ namespace hdNes.Nes
             S = 0xFD;
             P = 0xFF;
             A = 0x00;
-            _absoluteAddress.word = 0x0000;
+            _decodedAddress.word = 0x0000;
             _relativeAddress.word = 0x0000;
         }
 
@@ -166,7 +166,7 @@ namespace hdNes.Nes
             A = 0x00;
             X = 0x00;
             Y = 0x00;
-            _absoluteAddress.word = 0x0000;
+            _decodedAddress.word = 0x0000;
             _relativeAddress.word = 0x0000;
 
             for (ushort i = 0; i < 0x2000; i++)
@@ -203,16 +203,7 @@ namespace hdNes.Nes
         {
             _board.CpuWrite(address, data);
         }
-
-        private void Push()
-        {
-            
-        }
-
-        private void Pull()
-        {
-            
-        }
+        
         #endregion
     }
 }

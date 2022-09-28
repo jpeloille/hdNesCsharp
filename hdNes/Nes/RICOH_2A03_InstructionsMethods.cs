@@ -29,7 +29,7 @@ namespace hdNes.Nes
         private void ADC()
         {
             //Get operand from memory:
-            M = Read(_absoluteAddress.word);
+            M = Read(_decodedAddress.word);
             M &= 0xFF;
 
             //Instruction Computation:
@@ -64,7 +64,7 @@ namespace hdNes.Nes
         private void AND()
         {
             //Get operand from memory:
-            M = Read(_absoluteAddress.word);
+            M = Read(_decodedAddress.word);
             M &= 0xFF;
 
             //Instruction Computation:
@@ -93,7 +93,7 @@ namespace hdNes.Nes
         private void ASL()
         {
             if (_opcode == 0x0A) operand = A;
-            else operand = Read(_absoluteAddress.word);
+            else operand = Read(_decodedAddress.word);
             operand &= 0xFF;
 
             /* Faire le reset des flags impliqués */
@@ -104,7 +104,7 @@ namespace hdNes.Nes
             Z = operand == 0;
 
             if (_opcode == 0x0A) A = operand;
-            else Write(_absoluteAddress.word, operand);
+            else Write(_decodedAddress.word, operand);
         }
         #endregion
 
@@ -117,8 +117,8 @@ namespace hdNes.Nes
         {
             if (!C)
             {
-                _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _absoluteAddress.word;
+                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _decodedAddress.word;
             }
         }
         #endregion
@@ -132,8 +132,8 @@ namespace hdNes.Nes
         {
             if (C)
             {
-                _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _absoluteAddress.word;
+                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _decodedAddress.word;
             }
         }
         #endregion
@@ -147,8 +147,8 @@ namespace hdNes.Nes
         {
             if (Z)
             {
-                _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _absoluteAddress.word;
+                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _decodedAddress.word;
             }
         }
         #endregion
@@ -164,7 +164,7 @@ namespace hdNes.Nes
         private void BIT()
         {
             //Get operand from memory:
-            M = Read(_absoluteAddress.word);
+            M = Read(_decodedAddress.word);
             M &= 0xFF;
 
             Z = (A & M) == 0;
@@ -182,8 +182,8 @@ namespace hdNes.Nes
         {
             if (N)
             {
-                _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _absoluteAddress.word;
+                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _decodedAddress.word;
             }
         }
         #endregion
@@ -197,8 +197,8 @@ namespace hdNes.Nes
         {
             if (!Z)
             {
-                _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _absoluteAddress.word;
+                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _decodedAddress.word;
             }
         }
         #endregion
@@ -212,8 +212,8 @@ namespace hdNes.Nes
         {
             if (!N)
             {
-                _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _absoluteAddress.word;
+                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _decodedAddress.word;
             }
         }
         #endregion
@@ -252,8 +252,8 @@ namespace hdNes.Nes
         {
             if (!V)
             {
-                _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _absoluteAddress.word;
+                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _decodedAddress.word;
             }
         }
         #endregion
@@ -267,8 +267,8 @@ namespace hdNes.Nes
         {
             if (V)
             {
-                _absoluteAddress.word = (ushort)(PC + _relativeAddress.word);
-                PC = _absoluteAddress.word;
+                _decodedAddress.word = (ushort)(PC + _relativeAddress.word);
+                PC = _decodedAddress.word;
             }
         }
         #endregion
@@ -331,7 +331,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "CMP", AddressingMode = IndirectY, OpCode = 0xD1, NoCycles = 5)]
         private void CMP()
         {
-            M = Read(_absoluteAddress.word);
+            M = Read(_decodedAddress.word);
             Z = (A == M);
             C = (A >= M);
             N = (((A - M) >> 7) & 1) == 1;
@@ -347,7 +347,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "CPX", AddressingMode = Absolute,  OpCode = 0xEC, NoCycles = 4)]
         private void CPX()
         {
-            M = Read(_absoluteAddress.word);
+            M = Read(_decodedAddress.word);
             Z = (X == M);
             C = (X >= M);
             N = (((X - M) >> 7) & 1) == 1;
@@ -363,7 +363,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "CPY", AddressingMode = Absolute,  OpCode = 0xCC, NoCycles = 4)]
         private void CPY()
         {
-            M = Read(_absoluteAddress.word);
+            M = Read(_decodedAddress.word);
             Z = (Y == M);
             C = (Y >= M);
             N = (((Y - M) >> 7) & 1) == 1;
@@ -380,9 +380,9 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "DEC", AddressingMode = AbsoluteX, OpCode = 0xDE, NoCycles = 7)]
         private void DEC()
         {
-            M = Read(_absoluteAddress.word);
+            M = Read(_decodedAddress.word);
             result8 = (byte)(M - 0x01);
-            Write(_absoluteAddress.word, result8);
+            Write(_decodedAddress.word, result8);
             N = ((result8 >> 7) & 1) == 1;
             Z = result8 == 0;
         }
@@ -431,7 +431,7 @@ namespace hdNes.Nes
 
         private void EOR()
         {
-            M = Read(_absoluteAddress.word);
+            M = Read(_decodedAddress.word);
             result8 = (byte)(A ^ M);
             A = result8;
             N = ((result8 >> 7) & 1) == 1;
@@ -449,9 +449,9 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "INC", AddressingMode = AbsoluteX, OpCode = 0xFE, NoCycles = 7)]
         private void INC()
         {
-            M = Read(_absoluteAddress.word);
+            M = Read(_decodedAddress.word);
             result8 = (byte)(M + 1);
-            Write(_absoluteAddress.word, result8);
+            Write(_decodedAddress.word, result8);
             N = ((result8 >> 7) & 1) == 1;
             Z = result8 == 0;         
         }
@@ -493,50 +493,121 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "JMP", AddressingMode = Indirect, OpCode = 0x6C, NoCycles = 3)]
         private void JMP()
         {
-            switch (_opcode)
-            {
-                case 0X4C: //Absolute JMP
-                    byte PCL = _absoluteAddress.low;
-                    byte PCH = _absoluteAddress.high;
-
-                    PC = (ushort)((PCH << 8) & 0xFF00);
-                    PC = (ushort)(PC | PCL);
-                    break;
-                case 0X6C: //Indirect JMP
-                    byte IAL = _absoluteAddress.low;
-                    byte IAH = _absoluteAddress.high;
-
-                    ushort ADL_Adress = (ushort)(((IAH << 8) & 0XFF00) | IAL);
-                    byte ADL = Read(ADL_Adress);
-
-                    IAL = (byte)(IAL + 0X01);
-                    ushort ADH_Adress = (ushort)(((IAH << 8) & 0XFF00) | IAL);
-                    byte ADH = Read(ADH_Adress);
-
-                    PC = (ushort)(((ADH << 8) & 0xFF00) | ADL);
-                    break;
-            }
+            byte PCL = _decodedAddress.low;
+            byte PCH = _decodedAddress.high;
+            
+            PC = (ushort)(((PCH << 8) & 0xFF00) | PCL);
         }
         #endregion
+        
+        #region JSR
         //Action : jump to new location saving return address.
         //Operation : (PC + 1) -> PCL, (PC + 2) -> PCH.
-        //Flags : 6.
+        //Flags : none.
         [InstructionAttribute(Mnemonic = "JSR", AddressingMode = Absolute, OpCode = 0x20, NoCycles = 6)]
         private void JSR()
         {
-            byte PCL = _absoluteAddress.low;
-            byte PCH = _absoluteAddress.high;
+            byte PCL = _decodedAddress.low;
+            byte PCH = _decodedAddress.high;
 
             Write((ushort)(0x100+S), PCH);
             S--;
+            
             Write((ushort)(0x100+S), PCL);
             S--;
 
             PC = (ushort)((PCH << 8) & 0xFF00);
             PC = (ushort)(PC | PCL);
-        }
-        #region JSR
+        }        
+        #endregion
         
+        #region LDA
+        //Action : load accumulator with memory.
+        //Operation : M -> A.
+        //Flags : N,Z.
+        [InstructionAttribute(Mnemonic = "LDA", AddressingMode = Immediate, OpCode = 0xA9, NoCycles = 2)]
+        [InstructionAttribute(Mnemonic = "LDA", AddressingMode = ZeroPage,  OpCode = 0xA5, NoCycles = 3)]
+        [InstructionAttribute(Mnemonic = "LDA", AddressingMode = ZeroPageX, OpCode = 0xB5, NoCycles = 4)]
+        [InstructionAttribute(Mnemonic = "LDA", AddressingMode = Absolute,  OpCode = 0xAD, NoCycles = 4)]
+        [InstructionAttribute(Mnemonic = "LDA", AddressingMode = AbsoluteX, OpCode = 0xBD, NoCycles = 4)]
+        [InstructionAttribute(Mnemonic = "LDA", AddressingMode = AbsoluteY, OpCode = 0xB9, NoCycles = 4)]
+        [InstructionAttribute(Mnemonic = "LDA", AddressingMode = IndirectX, OpCode = 0xA1, NoCycles = 6)]
+        [InstructionAttribute(Mnemonic = "LDA", AddressingMode = IndirectY, OpCode = 0xB1, NoCycles = 5)]
+        private void LDA()
+        {
+            M = Read(_decodedAddress.word);
+            A = M;
+            
+            //Refresh flag status:
+            P &= 0x7D;
+            N = ((A >> 7) & 1) == 1;
+            Z = A == 0;
+        }        
+        #endregion
+
+        #region LDX
+        //Action : load index X with memory.
+        //Operation : M -> X.
+        //Flags : N,Z.
+        [InstructionAttribute(Mnemonic = "LDX", AddressingMode = Immediate, OpCode = 0xA2, NoCycles = 2)]
+        [InstructionAttribute(Mnemonic = "LDX", AddressingMode = ZeroPage,  OpCode = 0xA6, NoCycles = 3)]
+        [InstructionAttribute(Mnemonic = "LDX", AddressingMode = ZeroPageY, OpCode = 0xB6, NoCycles = 4)]
+        [InstructionAttribute(Mnemonic = "LDX", AddressingMode = Absolute,  OpCode = 0xAE, NoCycles = 4)]
+        [InstructionAttribute(Mnemonic = "LDX", AddressingMode = AbsoluteY, OpCode = 0xBE, NoCycles = 4)]
+        private void LDx()
+        {
+            M = Read(_decodedAddress.word);
+            X = M;
+            
+            //Refresh flag status:
+            P &= 0x7D;
+            N = ((X >> 7) & 1) == 1;
+            Z = X == 0;
+        }
+        #endregion
+        
+        #region LDY
+        //Action : load index Y with memory.
+        //Operation : M -> Y.
+        //Flags : N,Z.
+        [InstructionAttribute(Mnemonic = "LDY", AddressingMode = Immediate, OpCode = 0xA0, NoCycles = 2)]
+        [InstructionAttribute(Mnemonic = "LDY", AddressingMode = ZeroPage,  OpCode = 0xA4, NoCycles = 3)]
+        [InstructionAttribute(Mnemonic = "LDY", AddressingMode = ZeroPageX, OpCode = 0xB4, NoCycles = 4)]
+        [InstructionAttribute(Mnemonic = "LDY", AddressingMode = Absolute,  OpCode = 0xAC, NoCycles = 4)]
+        [InstructionAttribute(Mnemonic = "LDY", AddressingMode = AbsoluteX, OpCode = 0xBC, NoCycles = 4)]
+        private void LDY()
+        {
+            M = Read(_decodedAddress.word);
+            Y = M;
+            
+            //Refresh flag status:
+            P &= 0x7D;
+            N = ((Y >> 7) & 1) == 1;
+            Z = Y == 0;
+        }
+        #endregion
+        
+        #region LSR
+        //Action : shift right one bit (memory or accumulator).
+        //Operation : 0 -> 76534210 -> C.
+        //Flags : N = 0,Z, C.
+        [InstructionAttribute(Mnemonic = "LSR", AddressingMode = Accumulator, OpCode = 0x4A, NoCycles = 2)]
+        [InstructionAttribute(Mnemonic = "LSR", AddressingMode = ZeroPage,    OpCode = 0x46, NoCycles = 5)]
+        [InstructionAttribute(Mnemonic = "LSR", AddressingMode = ZeroPageX,   OpCode = 0x56, NoCycles = 6)]
+        [InstructionAttribute(Mnemonic = "LSR", AddressingMode = Absolute,    OpCode = 0x4E, NoCycles = 6)]
+        [InstructionAttribute(Mnemonic = "LSR", AddressingMode = AbsoluteX,   OpCode = 0x5E, NoCycles = 7)]
+        private void LSR()
+        {
+            if (_instructionAttributes[_opcode].AddressingMode == AddressingMode.Immediate)
+            {
+                C = (A << 7) == 1;
+                
+            }
+            else
+            {
+                
+            }
+        }
         #endregion
     }
 }

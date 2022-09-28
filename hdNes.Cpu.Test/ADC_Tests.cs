@@ -119,20 +119,18 @@ namespace hdNes.Cpu.Test
         {
             //Initialize fictive board:
             Board board = new Board();
-            board.Cartridge.UnitTest_Configure(new byte[] { 0x6D, 0x03, 0xC0, 0x40 });
+            board.Cartridge.UnitTest_Configure(new byte[] { 0x6D, 0x03, 0xC0, 0x01 });
             board.cpu.SetInUnitTestInitialState();
-            board.cpu.A = 0x40;
-            
+
             board.cpu.Tick(1);
 
             //Check register values output:
-            //Assert.AreNotEqual(0x00, board.cpu.A);
-            Assert.AreEqual(0x80, board.cpu.A);
+            Assert.AreNotEqual(0x00, board.cpu.A);
+            Assert.AreEqual(0x01, board.cpu.A);
             
             //Check flags output:
-            Assert.AreEqual(true, board.cpu.N);
+            Assert.AreEqual(false, board.cpu.N);
             Assert.AreEqual(false, board.cpu.Z);
-            Assert.AreEqual(true, board.cpu.V);
             Assert.AreEqual(false, board.cpu.C);
         }
 

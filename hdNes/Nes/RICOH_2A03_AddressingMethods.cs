@@ -40,27 +40,27 @@ namespace hdNes.Nes
         [AddressingModeAttribute(AddressingMode = AddressingMode.Immediate)]
         private void FetchAddress_Immediate()
         {
-            _absoluteAddress.word = PC;
+            _decodedAddress.word = PC;
             PC++;
         } //Confirmed 26-09-2021
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.Absolute)]
         private void FetchAddress_Absolute()
         {
-            _absoluteAddress.low = Read(PC);
+            _decodedAddress.low = Read(PC);
             PC++;
             
-            _absoluteAddress.high = Read(PC);
+            _decodedAddress.high = Read(PC);
             PC++;
         } //Confirmed 26-09-2021
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.ZeroPage)]
         private void FetchAddress_ZeroPage()
         {
-            _absoluteAddress.low = Read(PC);
+            _decodedAddress.low = Read(PC);
             PC++;
 
-            _absoluteAddress.high = 0x00;
+            _decodedAddress.high = 0x00;
         } //Confirmed 01-10-2021
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.ZeroPageX)]
@@ -69,8 +69,8 @@ namespace hdNes.Nes
             byte low = Read(PC); PC++;
             low += X;
 
-            _absoluteAddress.low = low;
-            _absoluteAddress.high = 0x00;
+            _decodedAddress.low = low;
+            _decodedAddress.high = 0x00;
         } //Confirmed 01-10-2021
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.ZeroPageY)]
@@ -79,32 +79,32 @@ namespace hdNes.Nes
             byte low = Read(PC); PC++;
             low += Y;
 
-            _absoluteAddress.low = low;
-            _absoluteAddress.high = 0x00;
+            _decodedAddress.low = low;
+            _decodedAddress.high = 0x00;
         }
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.AbsoluteX)]
         private void FetchAddress_AbsoluteX()
         {
-            _absoluteAddress.low = Read(PC);
+            _decodedAddress.low = Read(PC);
             PC++;
 
-            _absoluteAddress.high = Read(PC);
+            _decodedAddress.high = Read(PC);
             PC++;
 
-            _absoluteAddress.word += X;
+            _decodedAddress.word += X;
         } //Confirmed 01-10-2021
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.AbsoluteY)]
         private void FetchAddress_AbsoluteY()
         {
-            _absoluteAddress.low = Read(PC);
+            _decodedAddress.low = Read(PC);
             PC++;
 
-            _absoluteAddress.high = Read(PC);
+            _decodedAddress.high = Read(PC);
             PC++;
 
-            _absoluteAddress.word += Y;
+            _decodedAddress.word += Y;
         } //Confirmed 01-10-2021
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.IndirectX)]
@@ -114,10 +114,10 @@ namespace hdNes.Nes
             PC++;
 
             ushort lsb = (ushort)((loa + X) & 0x00FF);
-            _absoluteAddress.low = Read(lsb);
+            _decodedAddress.low = Read(lsb);
 
             ushort msb = (ushort)((loa + X + 1) & 0x00FF);
-            _absoluteAddress.high = Read(msb);
+            _decodedAddress.high = Read(msb);
         } //Confirmed 01-10-2021
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.IndirectY)]
@@ -127,27 +127,29 @@ namespace hdNes.Nes
             PC++;
 
             ushort lsb = (ushort)((loa) & 0x00FF);
-            _absoluteAddress.low = Read(lsb);
+            _decodedAddress.low = Read(lsb);
 
             ushort msb = (ushort)((loa + 1) & 0x00FF);
-            _absoluteAddress.high = Read(msb);
+            _decodedAddress.high = Read(msb);
 
-            _absoluteAddress.word += Y;
+            _decodedAddress.word += Y;
         }
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.Indirect)]
         private void FetchAddress_Indirect()
         {
-            /*byte loa = Read(PC);
+            byte IAL = Read(PC);
+            PC++;
+            
+            byte IAH = Read(PC);
             PC++;
 
-            ushort lsb = (ushort)(loa & 0x00FF);
-            _absoluteAddress.low = Read(lsb);
+            ushort ADL_Adress = (ushort)(((IAH << 8) & 0XFF00) | IAL);
+            _decodedAddress.low = Read(ADL_Adress);
 
-            ushort msb = (ushort)((loa + 1) & 0x00FF);
-            _absoluteAddress.high = Read(msb);*/
-            
-            //todo : Correct IND memory access method.
+            IAL = (byte)(IAL + 0X01);
+            ushort ADH_Adress = (ushort)(((IAH << 8) & 0XFF00) | IAL);
+            _decodedAddress.high = Read(ADH_Adress);
         }
 
         [AddressingModeAttribute(AddressingMode = AddressingMode.Relative)]
