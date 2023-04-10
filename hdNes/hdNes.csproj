@@ -8,17 +8,25 @@
     <ItemGroup>
       <Compile Remove="Cartridge\iMapper.cs" />
       <Compile Remove="Cartridge\NROM.cs" />
-      <Compile Update="Nes\InstructionsTables.cs">
-        <DependentUpon>Cpu_2A03.cs</DependentUpon>
+      <Compile Update="Nes\RICOH_2A03_AddressingMethods.cs">
+        <DependentUpon>RICOH_2A03.cs</DependentUpon>
       </Compile>
-      <Compile Update="Nes\AddressingMode.cs">
-        <DependentUpon>Cpu_2A03.cs</DependentUpon>
+      <Compile Update="Nes\RICOH_2A03_InstructionsMethods.cs">
+        <DependentUpon>RICOH_2A03.cs</DependentUpon>
       </Compile>
-      <Compile Update="Nes\InstructionssMethods.cs">
-        <DependentUpon>Cpu_2A03.cs</DependentUpon>
+      <Compile Remove="Nes\Cpu_2A03.cs" />
+      <Compile Remove="Nes\InstructionsTables.cs" />
+      <Compile Remove="Nes\AddressingMode.cs" />
+      <Compile Remove="Nes\InstructionssMethods.cs" />
+      <Compile Remove="Nes\UnitTestCpuMethods.cs" />
+      <Compile Update="Nes\RICOH_2A03_DebugingMethods.cs">
+        <DependentUpon>RICOH_2A03.cs</DependentUpon>
       </Compile>
-      <Compile Update="Nes\UnitTestCpuMethods.cs">
-        <DependentUpon>Cpu_2A03.cs</DependentUpon>
+      <Compile Update="Nes\RP_2C02_Registers.cs">
+        <DependentUpon>RP_2C02.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Nes\NES_MotherBoard_BusArbitrationLogic.cs">
+        <DependentUpon>NES_MotherBoard.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

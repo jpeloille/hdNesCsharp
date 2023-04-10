@@ -22,7 +22,6 @@
       <Compile Remove="AND_Tests.cs" />
       <Compile Remove="ASL_Tests.cs" />
       <Compile Remove="BCC_Tests.cs" />
-      <Compile Remove="BCS_Tests.cs" />
       <Compile Remove="BEQ_Tests.cs" />
       <Compile Remove="BIT_Tests.cs" />
       <Compile Remove="BMI_Tests.cs" />

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace hdNes.Nes
 {
@@ -150,10 +148,14 @@ namespace hdNes.Nes
 
         public void SetInResetState()
         {
-            PC = 0xFFFC;
+            PC = 0xC000;
             S = 0xFD;
-            P = 0xFF;
+            P = 0x24;
             A = 0x00;
+            
+            Write(0x4017, 0x00); //Frame irq enabled.
+            Write(0x4015, 0x00); //All channels disabled.
+            
             _physicalAddress.word = 0x0000;
             _relativeAddress.word = 0x0000;
         }
@@ -174,9 +176,13 @@ namespace hdNes.Nes
                 Write(i, 0x00);
             }
         }
-
+        
+        
         public void Tick(int count)
         {
+            List<DebugLine> debugReport = new List<DebugLine>();
+            DebugLine debugLine;
+            
             while (count >= 1)
             {
                 FetchOpcode();

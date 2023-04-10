@@ -166,6 +166,8 @@ namespace hdNes.Nes
                 _relativeAddress.low = 0x00;
                 _relativeAddress.high = 0xFF;
             }
+
+            _physicalAddress.word = (ushort)(PC + _relativeAddress.low);
         }
     }
 }

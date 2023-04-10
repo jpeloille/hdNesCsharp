@@ -114,6 +114,33 @@ namespace hdNes.Cartridge
             }
         }
 
+        /* Pour test - A détruire. */
+        public void InjectRom(string iNesFilePath)
+        {
+            //Check if file exist:
+            if (!File.Exists(iNesFilePath))
+                throw new Exception($"Unable to load iNes file: {iNesFilePath}");
+
+            /* Structure du fichier pour mémoire :
+             Les 16 premiers bytes consitituent les header,
+             Comme c'est un ROM de type 0 alors 16384 suivt pour le PRG et 8192 pour le CHR
+             soit un total de 24 592 bytes.*/
+            
+            byte[] iNesRom = File.ReadAllBytes((iNesFilePath));
+
+            int prgRomLength = _prgRom.Length;
+            for (ushort i = 0; i < prgRomLength - 1; i++)
+            {
+                _prgRom[i] = iNesRom[i + 16];
+            }
+
+            int chrRomLength = _chrRom.Length;
+            for (ushort i = 0; i < chrRomLength - 1; i++)
+            {
+                _chrRom[i] = iNesRom[i + prgRomLength + 16];
+            }
+        }
+
         public void UnitTest_Configure(byte[] UnitTestRom)
         {
             //Setup PRG ROM:

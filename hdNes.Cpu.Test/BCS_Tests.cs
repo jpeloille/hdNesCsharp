@@ -12,19 +12,19 @@ namespace hdNes.Cpu.Test
             //Initialize fictive board:
             Board board = new Board();
             board.Cartridge.UnitTest_Configure(new byte[]{0xB0, 0x0A, 0x00});
-            board.UnitTest_Reset();
-            board._cpu2A03.C = false;
+            board.cpu.SetInUnitTestInitialState();
+            board.cpu.C = false;
             
-            board._cpu2A03.Tick(1);
+            board.cpu.Tick(1);
             
             //Verify Memory Values
-            Assert.AreNotEqual(0xC000, board._cpu2A03.utPC);
-            Assert.AreEqual(0xC002, board._cpu2A03.utPC);
+            Assert.AreNotEqual(0xC000, board.cpu.PC, "PC should not be equal to $C000 !");
+            Assert.AreEqual(0xC002, board.cpu.PC, "PC should be equal to $C002 !");
             
             //Check flags output:
-            Assert.AreEqual(false, board._cpu2A03.Z);
-            Assert.AreEqual(false, board._cpu2A03.C);
-            Assert.AreEqual(false, board._cpu2A03.N);
+            Assert.AreEqual(false, board.cpu.Z);
+            Assert.AreEqual(false, board.cpu.C);
+            Assert.AreEqual(false, board.cpu.N);
         }
         
         [Test]
@@ -33,19 +33,19 @@ namespace hdNes.Cpu.Test
             //Initialize fictive board:
             Board board = new Board();
             board.Cartridge.UnitTest_Configure(new byte[]{0xB0, 0x0A, 0x00});
-            board.UnitTest_Reset();
-            board._cpu2A03.C = true;
+            board.cpu.SetInUnitTestInitialState();
+            board.cpu.C = true;
             
-            board._cpu2A03.Tick(1);
+            board.cpu.Tick(1);
             
             //Verify Memory Values
-            Assert.AreNotEqual(0xC000, board._cpu2A03.utPC);
-            Assert.AreEqual(0xC00C, board._cpu2A03.utPC);
+            Assert.AreNotEqual(0xC000, board.cpu.PC);
+            Assert.AreEqual(0xC00C, board.cpu.PC);
             
             //Check flags output:
-            Assert.AreEqual(false, board._cpu2A03.Z);
-            Assert.AreEqual(true, board._cpu2A03.C);
-            Assert.AreEqual(false, board._cpu2A03.N);
+            Assert.AreEqual(false, board.cpu.Z);
+            Assert.AreEqual(true, board.cpu.C);
+            Assert.AreEqual(false, board.cpu.N);
         } 
         
         [Test]
@@ -54,23 +54,23 @@ namespace hdNes.Cpu.Test
             //Initialize fictive board:
             Board board = new Board();
             board.Cartridge.UnitTest_Configure(new byte[]{0x00});
-            board.UnitTest_Reset();
-            board._cpu2A03.UnitTest_Write(0x00F0,0xB0);
-            board._cpu2A03.UnitTest_Write(0x00F1,0x79);
-            board._cpu2A03.UnitTest_Write(0x00F2,0x00);
-            board._cpu2A03.C = true;
-            board._cpu2A03.utPC = 0xF0;
+            board.cpu.SetInUnitTestInitialState();
+            board.cpu.Write(0x00F0,0xB0);
+            board.cpu.Write(0x00F1,0x79);
+            board.cpu.Write(0x00F2,0x00);
+            board.cpu.C = true;
+            board.cpu.PC = 0xF0;
             
-            board._cpu2A03.Tick(1);
+            board.cpu.Tick(1);
             
             //Verify Memory Values
-            Assert.AreNotEqual(0x00, board._cpu2A03.utPC);
-            Assert.AreEqual(0x16B, board._cpu2A03.utPC);
+            Assert.AreNotEqual(0x00, board.cpu.PC);
+            Assert.AreEqual(0x16B, board.cpu.PC);
             
             //Check flags output:
-            Assert.AreEqual(false, board._cpu2A03.Z);
-            Assert.AreEqual(true, board._cpu2A03.C);
-            Assert.AreEqual(false, board._cpu2A03.N);
+            Assert.AreEqual(false, board.cpu.Z);
+            Assert.AreEqual(true, board.cpu.C);
+            Assert.AreEqual(false, board.cpu.N);
         } 
     }
 }
