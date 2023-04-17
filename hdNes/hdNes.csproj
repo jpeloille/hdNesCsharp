@@ -25,9 +25,7 @@
       <Compile Update="Nes\RP_2C02_Registers.cs">
         <DependentUpon>RP_2C02.cs</DependentUpon>
       </Compile>
-      <Compile Update="Nes\NES_MotherBoard_BusArbitrationLogic.cs">
-        <DependentUpon>NES_MotherBoard.cs</DependentUpon>
-      </Compile>
+      <Compile Remove="Nes\NES_MotherBoard_BusArbitrationLogic.cs" />
     </ItemGroup>
 
 </Project>

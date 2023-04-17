@@ -3,10 +3,12 @@ using System.IO;
 using hdNes.Cartridge.Enums;
 using hdNes.Cartridge.Interfaces;
 using hdNes.Cartridge.MMC;
+using hdNes.Nes.EventArgs;
+using hdNes.Nes.Interfaces;
 
 namespace hdNes.Cartridge
 {
-    public class Cartridge
+    public class Cartridge : I8BitDataBus
     {
         //PRG ROM attributes:
         private int _prgRomBanks;
@@ -38,6 +40,11 @@ namespace hdNes.Cartridge
         private bool _hasBattery;
         private bool _hasTrainer;
         private bool _busConflicts;
+        
+        //Events:
+        public event EventHandler<MemoryReadAdressEventArg> CartridgeCpuMemoryReadRequest;
+        public event EventHandler<MemoryWriteEventArgs> CartridgeCpuMemoryWriteRequest;
+        
 
         /* .NES file format: https://wiki.nesdev.org/w/index.php/INES */
         public void DecodeAndUploadNesFile(string iNesFilePath)
@@ -210,6 +217,28 @@ namespace hdNes.Cartridge
         public bool ppuWrite(ushort address, byte data)
         {
             return false;
+        }
+
+        public void OnPrgRomReadRequest(object? sender, MemoryReadAdressEventArg memoryReadArgs)
+        {
+            memoryReadArgs.data = _prgRom[memoryReadArgs.address & 0x3FFF];
+            memoryReadArgs.isDdataReady = true;
+        }
+
+        public void OnPrgRomFlashRequest(object? sender, MemoryWriteEventArgs memoryWriteArgs)
+        {
+            _prgRom[memoryWriteArgs.address] = memoryWriteArgs.data;
+            memoryWriteArgs.hasBeenWriten = true;
+        }
+
+        public byte ReadByte(uint address)
+        {
+            return  _prgRom[address & 0x3FFF];
+        }
+
+        public void WriteByte(uint address, byte data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

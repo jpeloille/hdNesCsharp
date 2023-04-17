@@ -30,7 +30,7 @@ namespace hdNes.Nes
         private void ADC()
         {
             //Get operand from memory:
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             M &= 0xFF;
 
             //Instruction Computation:
@@ -65,7 +65,7 @@ namespace hdNes.Nes
         private void AND()
         {
             //Get operand from memory:
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             M &= 0xFF;
 
             //Instruction Computation:
@@ -94,7 +94,7 @@ namespace hdNes.Nes
         private void ASL()
         {
             if (_opcode == 0x0A) operand = A;
-            else operand = Read(_physicalAddress.word);
+            else operand = ReadByte(_physicalAddress.word);
             operand &= 0xFF;
 
             /* Faire le reset des flags impliqués */
@@ -105,7 +105,7 @@ namespace hdNes.Nes
             Z = operand == 0;
 
             if (_opcode == 0x0A) A = operand;
-            else Write(_physicalAddress.word, operand);
+            else WriteByte(_physicalAddress.word, operand);
         }
         #endregion
 
@@ -162,7 +162,7 @@ namespace hdNes.Nes
         private void BIT()
         {
             //Get operand from memory:
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             M &= 0xFF;
 
             Z = (A & M) == 0;
@@ -225,17 +225,17 @@ namespace hdNes.Nes
         {
             PC++;
             
-            Write((ushort)(0x100 + S), (byte)(PC >> 8 & 0x00FF));
+            WriteByte((ushort)(0x100 + S), (byte)(PC >> 8 & 0x00FF));
             S--;
             
-            Write((ushort)(0x100 + S), (byte)(PC & 0x00FF));
+            WriteByte((ushort)(0x100 + S), (byte)(PC & 0x00FF));
             S--;
             
-            Write((ushort)(0x100 + S), P);
+            WriteByte((ushort)(0x100 + S), P);
             S--;
 
-            var PCL = Read(0xFFFE);
-            var PCH = Read(0XFFFF);
+            var PCL = ReadByte(0xFFFE);
+            var PCH = ReadByte(0XFFFF);
             PC = (ushort)(((PCH << 8) & 0xFF00) | PCL);
 
         }
@@ -329,7 +329,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "CMP", AddressingMode = IndirectY, OpCode = 0xD1, NoBytes = 2, NoCycles = 5)]
         private void CMP()
         {
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             Z = (A == M);
             C = (A >= M);
             N = (((A - M) >> 7) & 1) == 1;
@@ -345,7 +345,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "CPX", AddressingMode = Absolute,  OpCode = 0xEC, NoBytes = 3, NoCycles = 4)]
         private void CPX()
         {
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             Z = (X == M);
             C = (X >= M);
             N = (((X - M) >> 7) & 1) == 1;
@@ -361,7 +361,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "CPY", AddressingMode = Absolute,  OpCode = 0xCC, NoBytes = 3, NoCycles = 4)]
         private void CPY()
         {
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             Z = (Y == M);
             C = (Y >= M);
             N = (((Y - M) >> 7) & 1) == 1;
@@ -378,9 +378,9 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "DEC", AddressingMode = AbsoluteX, OpCode = 0xDE, NoBytes = 3, NoCycles = 7)]
         private void DEC()
         {
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             result8 = (byte)(M - 0x01);
-            Write(_physicalAddress.word, result8);
+            WriteByte(_physicalAddress.word, result8);
             N = ((result8 >> 7) & 1) == 1;
             Z = result8 == 0;
         }
@@ -429,7 +429,7 @@ namespace hdNes.Nes
 
         private void EOR()
         {
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             result8 = (byte)(A ^ M);
             A = result8;
             N = ((result8 >> 7) & 1) == 1;
@@ -447,9 +447,9 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "INC", AddressingMode = AbsoluteX, OpCode = 0xFE, NoBytes = 3, NoCycles = 7)]
         private void INC()
         {
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             result8 = (byte)(M + 1);
-            Write(_physicalAddress.word, result8);
+            WriteByte(_physicalAddress.word, result8);
             N = ((result8 >> 7) & 1) == 1;
             Z = result8 == 0;         
         }
@@ -512,10 +512,10 @@ namespace hdNes.Nes
             byte PCL_ToStore = (byte)(PC - 1 & 0x00FF);
             byte PCH_ToStore = (byte)(PC -1 >> 8);
             
-            Write((ushort)(0x100+S), PCH_ToStore);
+            WriteByte((ushort)(0x100+S), PCH_ToStore);
             S--;
             
-            Write((ushort)(0x100+S), PCL_ToStore);
+            WriteByte((ushort)(0x100+S), PCL_ToStore);
             S--;   
             
             PC = (ushort)((PCH << 8) & 0xFF00);
@@ -537,7 +537,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "LDA", AddressingMode = IndirectY, OpCode = 0xB1, NoBytes = 2, NoCycles = 5)]
         private void LDA()
         {
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             A = M;
             
             //Refresh flag status:
@@ -558,7 +558,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "LDX", AddressingMode = AbsoluteY, OpCode = 0xBE, NoBytes = 3, NoCycles = 4)]
         private void LDx()
         {
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             X = M;
             
             //Refresh flag status:
@@ -579,7 +579,7 @@ namespace hdNes.Nes
         [InstructionAttribute(Mnemonic = "LDY", AddressingMode = AbsoluteX, OpCode = 0xBC, NoBytes = 3, NoCycles = 4)]
         private void LDY()
         {
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             Y = M;
             
             //Refresh flag status:
@@ -610,10 +610,10 @@ namespace hdNes.Nes
             }
             else
             {
-                M = Read(_physicalAddress.word);
+                M = ReadByte(_physicalAddress.word);
                 C = (M & 0x01) == 1;
                 M = (byte)((M >> 1) & 0xFF);
-                Write(_physicalAddress.word, M);
+                WriteByte(_physicalAddress.word, M);
                 N = ((M >> 7) & 1) == 1;
                 Z = M == 0;
             }
@@ -645,7 +645,7 @@ namespace hdNes.Nes
         [InstructionAttribute (Mnemonic = "ORA", AddressingMode = IndirectY, OpCode = 0x11, NoBytes = 2, NoCycles = 5)]
         private void ORA()
         {
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             A = (byte)(M | A);
             N = ((A >> 7) & 1) == 1;
             Z = A == 0; 
@@ -659,7 +659,7 @@ namespace hdNes.Nes
         [InstructionAttribute (Mnemonic = "PHA", AddressingMode = Implied, OpCode = 0x48, NoBytes = 1, NoCycles = 3)]
         private void PHA()
         {
-            Write((ushort)(0x0100 + S), A);
+            WriteByte((ushort)(0x0100 + S), A);
             S--;
         }
         #endregion
@@ -671,7 +671,7 @@ namespace hdNes.Nes
         [InstructionAttribute (Mnemonic = "PHP", AddressingMode = Implied, OpCode = 0x08, NoBytes = 1, NoCycles = 3)]
         private void PHP()
         {
-            Write((ushort)(0x0100 + S), P);
+            WriteByte((ushort)(0x0100 + S), P);
             S--;
         }
         #endregion
@@ -684,7 +684,7 @@ namespace hdNes.Nes
         private void PLA()
         {
             S++;
-            A = Read((ushort)(0x0100 + S));
+            A = ReadByte((ushort)(0x0100 + S));
             
             N = ((A >> 7) & 1) == 1;
             Z = A == 0; 
@@ -699,7 +699,7 @@ namespace hdNes.Nes
         private void PLP()
         {
             S++;
-            P = Read((ushort)(0x0100 + S));
+            P = ReadByte((ushort)(0x0100 + S));
 
         }
         #endregion    
@@ -727,13 +727,13 @@ namespace hdNes.Nes
             }
             else
             {
-                M = Read(_physicalAddress.word);
+                M = ReadByte(_physicalAddress.word);
                 
                 B7 = M >> 7 == 1;
                 
                 if (C) M = (byte)(M << 1 | 0x01);
                 else M = (byte)(M << 1 & 0xFF);
-                Write(_physicalAddress.word, M);
+                WriteByte(_physicalAddress.word, M);
                 
                 C = B7;
                 N = ((M >> 7) & 1) == 1;
@@ -767,13 +767,13 @@ namespace hdNes.Nes
             }
             else
             {
-                M = Read(_physicalAddress.word);
+                M = ReadByte(_physicalAddress.word);
                 
                 B0 = M << 7 == 1;
                 
                 if (C) M = (byte)(M >> 1 & 0x80);
                 else M = (byte)(M >> 1 & 0x7F);
-                Write(_physicalAddress.word, M);
+                WriteByte(_physicalAddress.word, M);
                 
                 C = B0;
                 N = ((M >> 7) & 1) == 1;
@@ -790,13 +790,13 @@ namespace hdNes.Nes
         private void RTI()
         {
             S++;
-            P = Read((ushort)(0x100 + S));
+            P = ReadByte((ushort)(0x100 + S));
 
             S++;
-            byte PCL = Read((ushort)(0x100 + S));
+            byte PCL = ReadByte((ushort)(0x100 + S));
 
             S++;
-            byte PCH = Read((ushort)(0x100 + S));
+            byte PCH = ReadByte((ushort)(0x100 + S));
 
             PC = (ushort)(((PCH << 8) & 0xFF00) | PCL);
         }
@@ -810,10 +810,10 @@ namespace hdNes.Nes
         private void RTS()
         {
             S++;    
-            byte PCL = Read((ushort)(0x100 + S));
+            byte PCL = ReadByte((ushort)(0x100 + S));
             
             S++;
-            byte PCH = Read((ushort)(0x100 + S));
+            byte PCH = ReadByte((ushort)(0x100 + S));
             
             PC = (ushort)((PCH << 8) & 0xFF00);
             PC = (ushort)(PC | PCL);
@@ -836,7 +836,7 @@ namespace hdNes.Nes
         private void SBC()
         {
             //Get operand from memory:
-            M = Read(_physicalAddress.word);
+            M = ReadByte(_physicalAddress.word);
             M &= 0xFF;
 
             byte carryFlagValue = (byte)(C ? 0 : 1);
@@ -903,7 +903,7 @@ namespace hdNes.Nes
         [InstructionAttribute (Mnemonic = "STA", AddressingMode = IndirectY, OpCode = 0x91, NoBytes = 2, NoCycles = 6)]
         private void STA()
         {
-            Write(_physicalAddress.word, A);
+            WriteByte(_physicalAddress.word, A);
         }
         #endregion
         
@@ -916,7 +916,7 @@ namespace hdNes.Nes
         [InstructionAttribute (Mnemonic = "STX", AddressingMode = Absolute,  OpCode = 0x8E, NoBytes = 3, NoCycles = 4)]
         private void STX()
         {
-            Write(_physicalAddress.word, X);
+            WriteByte(_physicalAddress.word, X);
         }
         #endregion
         
@@ -929,7 +929,7 @@ namespace hdNes.Nes
         [InstructionAttribute (Mnemonic = "STY", AddressingMode = Absolute,  OpCode = 0x8C, NoBytes = 3, NoCycles = 4)]
         private void STY()
         {
-            Write(_physicalAddress.word, Y);
+            WriteByte(_physicalAddress.word, Y);
         }
         #endregion
         

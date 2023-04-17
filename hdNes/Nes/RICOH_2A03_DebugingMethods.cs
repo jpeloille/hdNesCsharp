@@ -72,7 +72,7 @@ namespace hdNes.Nes
             {
                 case AddressingMode.Immediate:
                     currentInstruction.operandHigh = string.Empty;
-                    currentInstruction.operandLow = Read(_physicalAddress.word).ToString("X2");
+                    currentInstruction.operandLow = ReadByte(_physicalAddress.word).ToString("X2");
                     break;
                 case AddressingMode.Accumulator:
                     currentInstruction.operandHigh = string.Empty;
@@ -81,7 +81,7 @@ namespace hdNes.Nes
                 case AddressingMode.Relative:
                     currentInstruction.operandHigh =string.Empty;;
                     currentInstruction.operandLow = _physicalAddress.word.ToString("X4");
-                    currentInstruction.byteOne = Read((ushort)(currentInstruction.opcodeAdress + 1));
+                    currentInstruction.byteOne = ReadByte((ushort)(currentInstruction.opcodeAdress + 1));
                     break;
 
                 default:
@@ -101,19 +101,19 @@ namespace hdNes.Nes
                             case 2:
                                 currentInstruction.operandHigh = string.Empty;
                                 currentInstruction.operandLow = _physicalAddress.low.ToString("X2");
-                                currentInstruction.byteOne = Read((ushort)(currentInstruction.opcodeAdress + 1));
+                                currentInstruction.byteOne = ReadByte((ushort)(currentInstruction.opcodeAdress + 1));
                                 break;
                             case 3:
                                 currentInstruction.operandHigh = _physicalAddress.high.ToString("X2");
                                 currentInstruction.operandLow = _physicalAddress.low.ToString("X2");
-                                currentInstruction.byteOne = Read((ushort)(currentInstruction.opcodeAdress + 1));
-                                currentInstruction.byteTwo = Read((ushort)(currentInstruction.opcodeAdress + 2));
+                                currentInstruction.byteOne = ReadByte((ushort)(currentInstruction.opcodeAdress + 1));
+                                currentInstruction.byteTwo = ReadByte((ushort)(currentInstruction.opcodeAdress + 2));
                                 break;
                             default:
                                 currentInstruction.operandHigh = _physicalAddress.high.ToString("X2");
                                 currentInstruction.operandLow = _physicalAddress.low.ToString("X2");
-                                currentInstruction.byteOne = Read((ushort)(currentInstruction.opcodeAdress + 1));
-                                currentInstruction.byteTwo = Read((ushort)(currentInstruction.opcodeAdress + 2));
+                                currentInstruction.byteOne = ReadByte((ushort)(currentInstruction.opcodeAdress + 1));
+                                currentInstruction.byteTwo = ReadByte((ushort)(currentInstruction.opcodeAdress + 2));
                                 break;
                         }
                     }
@@ -198,7 +198,7 @@ namespace hdNes.Nes
                 {
                     case AddressingMode.Immediate:
                         debugLine.operandHigh = string.Empty;
-                        debugLine.operandLow = Read(_physicalAddress.word).ToString("X2");
+                        debugLine.operandLow = ReadByte(_physicalAddress.word).ToString("X2");
                         break;
                     case AddressingMode.Accumulator:
                         debugLine.operandHigh = string.Empty;

@@ -21,8 +21,8 @@ namespace hdNes
             Console.WriteLine("Program Counter at start: 0x" + nesBoard.cpu.PC.ToString("X4") + "h");
             //nesBoard.cpu.Debug(16384);
             nesBoard.cpu.FetchDebugAndReport(16384);
-            Console.WriteLine(nesBoard.cpu.Read(0x02));
-            Console.WriteLine(nesBoard.cpu.Read(0x03));
+            Console.WriteLine(nesBoard.cpu.ReadByte(0x02));
+            Console.WriteLine(nesBoard.cpu.ReadByte(0x03));
 
         }
         

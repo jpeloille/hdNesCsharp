@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using hdNes.Nes.EventArgs;
+using hdNes.Nes.Interfaces;
 
 namespace hdNes.Nes
 {
-    public sealed partial class Ricoh2A03
+    public sealed partial class Ricoh2A03 : I8BitDataBus
     {
-         //Board where the component is tied to:
-        private Board _board;
+        public delegate byte ReadU8(uint address);
+        public delegate void WriteU8(uint address, byte data);
+        
+        public readonly ReadU8[] MemoryReadMapper = new ReadU8[0xFFFF];
+        public readonly WriteU8[] MemoryWriteMapper = new WriteU8[0xFFFF];
 
         //Instructions set container:
         public delegate void Instruction();
@@ -86,11 +91,9 @@ namespace hdNes.Nes
         private byte operand;
 
         private int cycles = 0;
-
-        public Ricoh2A03(Board board)
+   
+        public Ricoh2A03()
         {
-            _board = board;
-
             InitializeInstructionDelegateTable();
             InitializeInstructionAddressModeDelegateTable();
         }
@@ -153,8 +156,8 @@ namespace hdNes.Nes
             P = 0x24;
             A = 0x00;
             
-            Write(0x4017, 0x00); //Frame irq enabled.
-            Write(0x4015, 0x00); //All channels disabled.
+            WriteByte(0x4017, 0x00); //Frame irq enabled.
+            WriteByte(0x4015, 0x00); //All channels disabled.
             
             _physicalAddress.word = 0x0000;
             _relativeAddress.word = 0x0000;
@@ -173,7 +176,7 @@ namespace hdNes.Nes
 
             for (ushort i = 0; i < 0x2000; i++)
             {
-                Write(i, 0x00);
+                WriteByte(i, 0x00);
             }
         }
         
@@ -194,22 +197,23 @@ namespace hdNes.Nes
 
         public void FetchOpcode()
         {
-            _opcode = Read(PC);
+            _opcode = ReadByte(PC);
             PC++;
         }
-
-        //only public for unit test - prefer private for final version
-        public byte Read(ushort address)
+        
+        public byte ReadByte(uint address)
         {
-            return _board.CpuRead(address);
+            byte data = (byte)MemoryReadMapper[address]?.Invoke(address);
+            return data;
         }
 
-        //only public for unit test - prefer private for final version
-        public void Write(ushort address, byte data)
+        public void WriteByte(uint address, byte data)
         {
-            _board.CpuWrite(address, data);
-        }
+            MemoryWriteMapper[address]?.Invoke(address & 0x07FF, data);
+        }    
         
         #endregion
+
+
     }
 }
